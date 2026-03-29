@@ -1,0 +1,64 @@
+{
+  "versionGroups": [
+    {
+      "label": "shared → entities への依存は禁止 (FSD: 下位から上位)",
+      "isBanned": true,
+      "packages": ["@repo/shared-*"],
+      "dependencies": ["@repo/entities-*"]
+    },
+    {
+      "label": "shared → features への依存は禁止 (FSD: 下位から上位)",
+      "isBanned": true,
+      "packages": ["@repo/shared-*"],
+      "dependencies": ["@repo/features-*"]
+    },
+    {
+      "label": "shared → widgets への依存は禁止 (FSD: 下位から上位)",
+      "isBanned": true,
+      "packages": ["@repo/shared-*"],
+      "dependencies": ["@repo/widgets-*"]
+    },
+    {
+      "label": "shared → pages への依存は禁止 (FSD: 下位から上位)",
+      "isBanned": true,
+      "packages": ["@repo/shared-*"],
+      "dependencies": ["@repo/pages-*"]
+    },
+    {
+      "label": "entities → features への依存は禁止 (FSD: 下位から上位)",
+      "isBanned": true,
+      "packages": ["@repo/entities-*"],
+      "dependencies": ["@repo/features-*"]
+    },
+    {
+      "label": "entities → widgets への依存は禁止 (FSD: 下位から上位)",
+      "isBanned": true,
+      "packages": ["@repo/entities-*"],
+      "dependencies": ["@repo/widgets-*"]
+    },
+    {
+      "label": "entities → pages への依存は禁止 (FSD: 下位から上位)",
+      "isBanned": true,
+      "packages": ["@repo/entities-*"],
+      "dependencies": ["@repo/pages-*"]
+    },
+    {
+      "label": "features → widgets への依存は禁止 (FSD: 下位から上位)",
+      "isBanned": true,
+      "packages": ["@repo/features-*"],
+      "dependencies": ["@repo/widgets-*"]
+    },
+    {
+      "label": "features → pages への依存は禁止 (FSD: 下位から上位)",
+      "isBanned": true,
+      "packages": ["@repo/features-*"],
+      "dependencies": ["@repo/pages-*"]
+    },
+    {
+      "label": "widgets → pages への依存は禁止 (FSD: 下位から上位)",
+      "isBanned": true,
+      "packages": ["@repo/widgets-*"],
+      "dependencies": ["@repo/pages-*"]
+    }
+  ]
+}

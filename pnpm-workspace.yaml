@@ -1,0 +1,11 @@
+packages:
+  - apps/*
+  - packages/pages/*
+  - packages/widgets/*
+  - packages/features/*
+  - packages/entities/*
+  - packages/shared/*
+
+onlyBuiltDependencies:
+  - esbuild
+  - lefthook

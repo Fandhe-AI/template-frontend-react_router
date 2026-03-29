@@ -1,0 +1,21 @@
+{
+  "name": "vitest-app",
+  "version": "0.0.0",
+  "devDependencies": {
+    "@repo/shared-config-typescript": "workspace:*",
+    "@types/node": "25",
+    "@vitest/ui": "4.1.2",
+    "tsx": "4.21.0",
+    "typescript": "6.0.2",
+    "vite": "8.0.3",
+    "vitest": "4.1.2"
+  },
+  "private": true,
+  "scripts": {
+    "collect-blobs": "tsx scripts/collect-blobs.ts",
+    "collect-coverage": "tsx scripts/collect-coverage.ts",
+    "merge-reports": "vitest run --merge-reports=./blob-inputs --passWithNoTests --reporter=default --reporter=json --reporter=html --outputFile.json=./reports/results.json --outputFile.html=./reports/index.html",
+    "vitest": "vite preview --outDir reports"
+  },
+  "type": "module"
+}

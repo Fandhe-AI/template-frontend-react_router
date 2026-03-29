@@ -1,0 +1,10 @@
+{
+  "name": "@repo/shared-config-typescript",
+  "description": "Shared TypeScript configuration for the monorepo",
+  "version": "0.0.0",
+  "exports": {
+    "./*": "./src/config/*.json"
+  },
+  "private": true,
+  "type": "module"
+}

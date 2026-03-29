@@ -1,0 +1,8 @@
+{
+  "semverGroups": [
+    {
+      "dependencies": ["**"],
+      "range": ""
+    }
+  ]
+}

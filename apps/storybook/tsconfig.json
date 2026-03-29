@@ -1,0 +1,4 @@
+{
+  "extends": "@repo/shared-config-typescript/react-library",
+  "include": [".storybook"]
+}

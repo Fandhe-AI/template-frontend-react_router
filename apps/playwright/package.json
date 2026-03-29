@@ -1,0 +1,20 @@
+{
+  "name": "playwright",
+  "version": "0.0.0",
+  "devDependencies": {
+    "@playwright/test": "1.58.2",
+    "@repo/shared-config-playwright": "workspace:*",
+    "@repo/shared-config-typescript": "workspace:*",
+    "@types/node": "25",
+    "typescript": "6.0.2"
+  },
+  "private": true,
+  "scripts": {
+    "report": "playwright show-report",
+    "test:debug": "playwright test --debug",
+    "test:e2e": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:ui": "playwright test --ui"
+  },
+  "type": "module"
+}

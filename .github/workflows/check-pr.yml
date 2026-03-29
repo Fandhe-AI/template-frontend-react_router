@@ -1,0 +1,228 @@
+name: PR チェック
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref }}
+  cancel-in-progress: true
+
+jobs:
+  # --------------------------------------------------
+  # 軽量チェック（セットアップ不要・全 PR 共通）
+  # --------------------------------------------------
+  reviewdog:
+    name: Biome (reviewdog)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Run reviewdog with Biome
+        uses: mongolyy/reviewdog-action-biome@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          fail_level: warning
+
+  editorconfig:
+    name: EditorConfig
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Run editorconfig-checker
+        uses: editorconfig-checker/action-editorconfig-checker@main
+
+      - run: editorconfig-checker
+
+  # --------------------------------------------------
+  # コミットメッセージ検証（全 PR 共通）
+  # --------------------------------------------------
+  commitlint:
+    name: Commitlint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Setup pnpm and Node.js
+        uses: ./.github/actions/setup-pnpm
+
+      - name: Install dependencies
+        uses: ./.github/actions/install-deps
+
+      - name: Validate PR commits
+        run: npx commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }} --verbose
+
+  # --------------------------------------------------
+  # コード品質チェック（main ブランチ向け PR のみ）
+  # --------------------------------------------------
+  lint:
+    name: Biome lint & format
+    if: github.base_ref == 'main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Setup pnpm and Node.js
+        uses: ./.github/actions/setup-pnpm
+
+      - name: Install dependencies
+        uses: ./.github/actions/install-deps
+
+      - name: Run Biome check
+        run: pnpm lint
+
+  check-types:
+    name: TypeScript type check
+    if: github.base_ref == 'main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Setup pnpm and Node.js
+        uses: ./.github/actions/setup-pnpm
+
+      - name: Install dependencies
+        uses: ./.github/actions/install-deps
+
+      - name: Run type check
+        run: pnpm check-types
+
+  knip:
+    name: Knip (unused code)
+    if: github.base_ref == 'main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Setup pnpm and Node.js
+        uses: ./.github/actions/setup-pnpm
+
+      - name: Install dependencies
+        uses: ./.github/actions/install-deps
+
+      - name: Run Knip
+        run: pnpm knip
+
+  syncpack:
+    name: Syncpack (dependency consistency)
+    if: github.base_ref == 'main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Setup pnpm and Node.js
+        uses: ./.github/actions/setup-pnpm
+
+      - name: Install dependencies
+        uses: ./.github/actions/install-deps
+
+      - name: Check dependency version consistency
+        run: pnpm package:lint
+
+      - name: Check package.json formatting
+        run: pnpm package:format
+
+  test:
+    name: Test
+    if: github.base_ref == 'main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Setup pnpm and Node.js
+        uses: ./.github/actions/setup-pnpm
+
+      - name: Install dependencies
+        uses: ./.github/actions/install-deps
+
+      - name: Run tests with coverage
+        run: pnpm test:coverage
+
+      - name: Collect coverage reports
+        if: always()
+        run: pnpm --filter=vitest-app collect-coverage
+
+      - name: Report coverage
+        if: always()
+        uses: davelosert/vitest-coverage-report-action@v2
+        with:
+          json-summary-path: ./apps/vitest/coverage/coverage-summary.json
+          json-final-path: ./apps/vitest/coverage/coverage-final.json
+          file-coverage-mode: changes
+
+  test-e2e:
+    name: E2E Test (Playwright)
+    if: github.base_ref == 'main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Setup pnpm and Node.js
+        uses: ./.github/actions/setup-pnpm
+
+      - name: Install dependencies
+        uses: ./.github/actions/install-deps
+
+      - name: Install Playwright browsers
+        run: cd apps/playwright && pnpm exec playwright install --with-deps chromium
+
+      - name: Run E2E tests
+        run: pnpm test:e2e
+
+  storybook-build:
+    name: Storybook build
+    if: github.base_ref == 'main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Setup pnpm and Node.js
+        uses: ./.github/actions/setup-pnpm
+
+      - name: Install dependencies
+        uses: ./.github/actions/install-deps
+
+      - name: Build Storybook
+        run: pnpm storybook:build
+
+  # --------------------------------------------------
+  # ビルド（品質チェック通過後・main ブランチ向け PR のみ）
+  # --------------------------------------------------
+  build:
+    name: Build
+    if: github.base_ref == 'main'
+    runs-on: ubuntu-latest
+    needs: [lint, check-types, knip, syncpack, test, test-e2e, storybook-build]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Setup pnpm and Node.js
+        uses: ./.github/actions/setup-pnpm
+
+      - name: Install dependencies
+        uses: ./.github/actions/install-deps
+
+      - name: Build application
+        uses: ./.github/actions/build-app

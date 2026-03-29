@@ -1,0 +1,10 @@
+{
+  "name": "@repo/shared-config-typedoc",
+  "description": "Shared TypeDoc configuration for API documentation generation",
+  "version": "0.0.0",
+  "exports": {
+    "./*": "./src/config/*.json"
+  },
+  "private": true,
+  "type": "module"
+}

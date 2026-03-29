@@ -1,0 +1,15 @@
+{
+  "name": "@repo/shared-config-commitlint",
+  "description": "Commitlint configuration for the project",
+  "version": "0.0.0",
+  "devDependencies": {
+    "@commitlint/config-conventional": "20.5.0",
+    "@commitlint/config-pnpm-scopes": "20.4.3",
+    "@commitlint/types": "20.5.0"
+  },
+  "exports": {
+    "./*": "./src/config/*.ts"
+  },
+  "private": true,
+  "type": "module"
+}

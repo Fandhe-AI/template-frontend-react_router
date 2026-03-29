@@ -1,0 +1,23 @@
+name: "Build application"
+description: "Build the application and optionally upload artifacts"
+
+inputs:
+  upload-artifacts:
+    description: "Whether to upload build artifacts"
+    required: false
+    default: "false"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Build application
+      run: pnpm build
+      shell: bash
+
+    - name: Upload build artifacts
+      if: inputs.upload-artifacts == 'true'
+      uses: actions/upload-artifact@v4
+      with:
+        name: build-output
+        path: apps/web/build
+        retention-days: 1

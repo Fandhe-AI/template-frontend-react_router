@@ -1,0 +1,13 @@
+{
+  "name": "@repo/shared-config-playwright",
+  "description": "Shared Playwright configuration for E2E testing",
+  "version": "0.0.0",
+  "exports": {
+    "./configs/*": "./configs/*.ts"
+  },
+  "peerDependencies": {
+    "@playwright/test": "1.58.2"
+  },
+  "private": true,
+  "type": "module"
+}

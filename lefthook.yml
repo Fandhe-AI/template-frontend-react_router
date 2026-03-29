@@ -1,0 +1,46 @@
+pre-commit:
+  parallel: true
+  jobs:
+    - name: "biome check"
+      glob: "{apps,packages}/**/*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}"
+      run: pnpm exec biome check --no-errors-on-unmatched --files-ignore-unknown=true --colors=off {staged_files}
+      tags:
+        - lint
+
+pre-push:
+  parallel: true
+  jobs:
+    - name: "check-types"
+      glob: "{apps,packages}/**/*.{ts,tsx,js,jsx}"
+      run: pnpm run check-types
+      tags:
+        - types
+
+    - name: "knip"
+      glob: "{apps,packages}/**/*.{ts,tsx,js,jsx,json}"
+      run: pnpm run knip
+      tags:
+        - dependencies
+
+    - name: "syncpack:lint"
+      glob: "**/package.json"
+      run: pnpm run package:lint
+      tags:
+        - syncpack
+
+    - name: "syncpack:format"
+      glob: "**/package.json"
+      run: pnpm run package:format
+      tags:
+        - syncpack
+
+    - name: "test"
+      glob: "{apps,packages}/**/*.{ts,tsx,js,jsx}"
+      run: pnpm run test
+      tags:
+        - test
+
+commit-msg:
+  commands:
+    commitlint:
+      run: pnpm exec commitlint --edit {1}

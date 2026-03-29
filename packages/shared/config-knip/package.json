@@ -1,0 +1,10 @@
+{
+  "name": "@repo/shared-config-knip",
+  "description": "Knip configuration for unused code detection",
+  "version": "0.0.0",
+  "exports": {
+    "./*": "./src/config/*.json"
+  },
+  "private": true,
+  "type": "module"
+}

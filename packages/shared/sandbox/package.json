@@ -1,0 +1,30 @@
+{
+  "name": "@repo/shared-sandbox",
+  "description": "Sandbox slice for verifying tests, TypeDoc, and Storybook",
+  "version": "0.0.0",
+  "dependencies": {
+    "react": "19.2.4"
+  },
+  "devDependencies": {
+    "@repo/shared-config-typescript": "workspace:*",
+    "@repo/shared-config-vitest": "workspace:*",
+    "@storybook/react-vite": "10.3.3",
+    "@testing-library/react": "16.3.2",
+    "@types/node": "25",
+    "@types/react": "19.2.14",
+    "@vitest/coverage-v8": "4.1.2",
+    "typescript": "6.0.2",
+    "vitest": "4.1.2"
+  },
+  "exports": {
+    "./*": "./src/*.ts",
+    "./ui/*": "./src/ui/*.tsx"
+  },
+  "private": true,
+  "scripts": {
+    "check-types": "tsc --noEmit",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage.enabled"
+  },
+  "type": "module"
+}

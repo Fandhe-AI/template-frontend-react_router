@@ -1,0 +1,5 @@
+{
+  "extends": "@repo/shared-config-typescript/base",
+  "include": [],
+  "files": []
+}

@@ -1,0 +1,44 @@
+{
+  "biome.lsp": {
+    "configurationPath": "./biome.json"
+  },
+  "cSpell.words": [
+    "autodocs",
+    "bullmq",
+    "chakra",
+    "commitlint",
+    "dagre",
+    "dotclaude",
+    "elkjs",
+    "fandhe",
+    "isbot",
+    "knip",
+    "kubb",
+    "lefthook",
+    "nuqs",
+    "oneline",
+    "osascript",
+    "pino",
+    "reactflow",
+    "Revalidator",
+    "reviewdog",
+    "Supabase",
+    "syncpack",
+    "turbopack",
+    "turborepo",
+    "typedoc",
+    "vercel",
+    "VITE",
+    "vitest",
+    "worktrees"
+  ],
+  "editor.codeActionsOnSave": {
+    "source.action.useSortedKeys.biome": "explicit",
+    "source.fixAll.biome": "explicit",
+    "source.organizeImports.biome": "explicit"
+  },
+  "editor.defaultFormatter": "biomejs.biome",
+  "editor.formatOnSave": true,
+  "explorer.autoReveal": false,
+  "editor.tabSize": 2
+}

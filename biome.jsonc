@@ -1,0 +1,30 @@
+{
+  "extends": [
+    "@repo/shared-config-biome/core",
+    "@repo/shared-config-biome/root",
+    "@repo/shared-config-biome/import"
+  ],
+  "files": {
+    "includes": [
+      "apps/**",
+      "packages/**",
+      "!**/node_modules",
+      "!**/build",
+      "!**/dist",
+      "!**/.next",
+      "!**/.react-router",
+      "!**/.turbo",
+      "!**/public",
+      "!**/*.css",
+      "!**/playwright-report",
+      "!**/test-results",
+      "!**/coverage",
+      "!**/storybook-static",
+      "!**/blob-inputs",
+      "!**/reports",
+      "!.agents",
+      "!.claude/skills",
+      "!.claude/worktrees"
+    ]
+  }
+}

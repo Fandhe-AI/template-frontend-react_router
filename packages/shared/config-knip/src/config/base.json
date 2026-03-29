@@ -1,0 +1,75 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "workspaces": {
+    ".": {
+      "entry": [],
+      "project": [],
+      "ignoreDependencies": ["tsx"],
+      "ignoreBinaries": ["playwright"]
+    },
+    "apps/web": {
+      "entry": ["src/routes/**/*.tsx"],
+      "project": ["src/**/*.{ts,tsx}"],
+      "ignore": [
+        "src/components/ui/**",
+        "src/lib/**",
+        "src/context.ts",
+        "src/types/**"
+      ],
+      "ignoreDependencies": [
+        "happy-dom",
+        "@supabase/ssr",
+        "@supabase/supabase-js",
+        "zod"
+      ],
+      "ignoreUnresolved": ["\\./\\+types/"]
+    },
+    "apps/storybook": {
+      "entry": [".storybook/**/*.{ts,tsx}"]
+    },
+    "apps/typedoc": {
+      "entry": [],
+      "project": [],
+      "ignoreDependencies": ["@repo/shared-config-typedoc"]
+    },
+    "apps/playwright": {
+      "entry": ["src/**/*.ts"],
+      "project": ["src/**/*.ts"]
+    },
+    "packages/shared/config-commitlint": {
+      "entry": ["src/**/*.ts"],
+      "project": ["src/**/*.ts"],
+      "ignoreDependencies": [
+        "@commitlint/config-conventional",
+        "@commitlint/config-pnpm-scopes"
+      ]
+    },
+    "packages/shared/config-typescript": {
+      "entry": ["src/**/*.{ts,tsx,json}"],
+      "project": ["src/**/*.{ts,tsx,json}"],
+      "ignoreUnresolved": ["vite/client"]
+    },
+    "packages/shared/config-vitest": {
+      "entry": ["src/**/*.ts"],
+      "project": ["src/**/*.ts"],
+      "ignoreDependencies": ["@vitest/coverage-v8"]
+    },
+    "packages/shared/config-storybook": {
+      "entry": ["src/**/*.{ts,tsx}"],
+      "project": ["src/**/*.{ts,tsx}"]
+    },
+    "packages/shared/config-playwright": {
+      "entry": ["configs/**/*.ts"],
+      "project": ["configs/**/*.ts"]
+    },
+    "packages/shared/sandbox": {
+      "entry": ["src/**/*.{ts,tsx,json}"],
+      "project": ["src/**/*.{ts,tsx,json}"],
+      "ignoreDependencies": ["happy-dom"]
+    },
+    "packages/shared/*": {
+      "entry": ["src/**/*.{ts,tsx,json}"],
+      "project": ["src/**/*.{ts,tsx,json}"]
+    }
+  }
+}

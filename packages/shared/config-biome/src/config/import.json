@@ -1,0 +1,21 @@
+{
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": {
+          "level": "on",
+          "options": {
+            "groups": [
+              ":NODE:",
+              ["npm:*", "npm:*/**"],
+              ":PACKAGE:",
+              ["/**"],
+              ["#*", "#*/**"],
+              ":PATH:"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

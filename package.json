@@ -1,0 +1,53 @@
+{
+  "name": "frontend-react-router-template",
+  "devDependencies": {
+    "@biomejs/biome": "2.4.9",
+    "@commitlint/cli": "20.5.0",
+    "@repo/shared-config-biome": "workspace:*",
+    "@repo/shared-config-commitlint": "workspace:*",
+    "@repo/shared-config-knip": "workspace:*",
+    "@repo/shared-config-syncpack": "workspace:*",
+    "knip": "6.1.0",
+    "lefthook": "2.1.4",
+    "syncpack": "14.0.0-alpha.41",
+    "tsx": "4.21.0",
+    "turbo": "2.8.21",
+    "typescript": "6.0.2"
+  },
+  "engines": {
+    "node": "24.13.0",
+    "pnpm": "10.32.1",
+    "npm": "use pnpm please!",
+    "yarn": "use pnpm please!"
+  },
+  "packageManager": "pnpm@10.32.1",
+  "private": true,
+  "scripts": {
+    "build": "turbo build",
+    "check-types": "turbo check-types",
+    "dev": "turbo dev --filter=web",
+    "format": "biome format .",
+    "format:fix": "biome format --write .",
+    "knip": "knip",
+    "knip:fix": "knip --fix",
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "package:fix": "syncpack fix",
+    "package:format": "syncpack format --check",
+    "package:format:fix": "syncpack format",
+    "package:lint": "syncpack lint",
+    "package:update": "syncpack update --check",
+    "package:update:fix": "syncpack update",
+    "storybook": "turbo storybook",
+    "storybook:build": "turbo storybook:build",
+    "test": "turbo test",
+    "test:coverage": "turbo test:coverage",
+    "test:e2e": "turbo test:e2e",
+    "typedoc": "turbo typedoc",
+    "vitest": "turbo test && turbo vitest"
+  },
+  "volta": {
+    "node": "24.13.0",
+    "pnpm": "10.32.1"
+  }
+}

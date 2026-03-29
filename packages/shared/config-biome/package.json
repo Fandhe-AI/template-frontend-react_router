@@ -1,0 +1,10 @@
+{
+  "name": "@repo/shared-config-biome",
+  "description": "Biome configuration for linting and formatting",
+  "version": "0.0.0",
+  "exports": {
+    "./*": "./src/config/*.json"
+  },
+  "private": true,
+  "type": "module"
+}

@@ -1,0 +1,170 @@
+{
+  "version": 1,
+  "skills": {
+    "biome": {
+      "source": "Fandhe-AI/agent-reference-skills",
+      "sourceType": "github",
+      "computedHash": "3f9479b4ddb77eb0ead3ef846be98e840ecd7ca1a0a08539bda3a01845e65a6d"
+    },
+    "chakra-ui": {
+      "source": "Fandhe-AI/agent-reference-skills",
+      "sourceType": "github",
+      "computedHash": "ea0f377509a9513ad5c90a8e157096a502b3e16b4bdca72bac57e616ce7f1dcf"
+    },
+    "code-connect-components": {
+      "source": "figma/mcp-server-guide",
+      "sourceType": "github",
+      "computedHash": "8fc174fa15bfd54c7c897ac6a4ce260a933bece6920c0d51fa8e8925f861eb11"
+    },
+    "commitlint": {
+      "source": "Fandhe-AI/agent-reference-skills",
+      "sourceType": "github",
+      "computedHash": "4f327ded5b11010c1b26018fe14ecada5fd45f1527d366be7412722ed3982d97"
+    },
+    "create-commit": {
+      "source": "Fandhe-AI/agent-cli-skills",
+      "sourceType": "github",
+      "computedHash": "80e2dd223297cd72176d99e0540ed3a417cc5ce27c070b7ef6c49d188c457f92"
+    },
+    "create-design-system-rules": {
+      "source": "figma/mcp-server-guide",
+      "sourceType": "github",
+      "computedHash": "d6043b42474f54b855b0a0394032eb7443945adaa33893eac6d3968f94822d31"
+    },
+    "create-issue": {
+      "source": "Fandhe-AI/agent-cli-skills",
+      "sourceType": "github",
+      "computedHash": "9dffd3051abe6daecc1424ec9db449cfb0e746569e6e8c4c32d59c46018e6196"
+    },
+    "create-plan": {
+      "source": "Fandhe-AI/agent-cli-skills",
+      "sourceType": "github",
+      "computedHash": "3931635c73dd59a9e7692825ce700ba9b3b11b068a8f6bea848f2ded869d0589"
+    },
+    "create-pr": {
+      "source": "Fandhe-AI/agent-cli-skills",
+      "sourceType": "github",
+      "computedHash": "383b44949abd37e7e063e6855bb1d63654cd1898f8e681e237e1d2e35d9fbc55"
+    },
+    "deploy-to-vercel": {
+      "source": "vercel-labs/agent-skills",
+      "sourceType": "github",
+      "computedHash": "d2b5bcc7c09fdb649129ffc7dd7b647ec1b155736974b974292675afd588cb39"
+    },
+    "editorconfig": {
+      "source": "Fandhe-AI/agent-reference-skills",
+      "sourceType": "github",
+      "computedHash": "f5545c36db67bc79764c71db7e78043291116a7d2a0a32c4b8b4c0609cc4fcdf"
+    },
+    "feature-sliced-design": {
+      "source": "Fandhe-AI/agent-reference-skills",
+      "sourceType": "github",
+      "computedHash": "2e09c7c221f9ca609c73459322012eecb3a7b74cc1e00bb698f9dbce164f1d94"
+    },
+    "implement-design": {
+      "source": "figma/mcp-server-guide",
+      "sourceType": "github",
+      "computedHash": "2e87927b93592fbc1cf48a58d6359d2894ad5e7611f7e824233bf4f6bb84db61"
+    },
+    "implement-issue": {
+      "source": "Fandhe-AI/agent-cli-skills",
+      "sourceType": "github",
+      "computedHash": "9d4aced240662506393bfe10f55bf323b45f6636d0fb92442f6d93f3ecea43a6"
+    },
+    "implement-review": {
+      "source": "Fandhe-AI/agent-cli-skills",
+      "sourceType": "github",
+      "computedHash": "c2f15ceb6420427b47d2939c625b711ff2e72e965a14cf9294e0ece471dd4b05"
+    },
+    "implement-review-pr": {
+      "source": "Fandhe-AI/agent-cli-skills",
+      "sourceType": "github",
+      "computedHash": "4dbc93414d48376f5ed892c68b12dc4fd4638a453441b8b87bfbc33086e7d550"
+    },
+    "knip": {
+      "source": "Fandhe-AI/agent-reference-skills",
+      "sourceType": "github",
+      "computedHash": "898cb7ee5c669e9d0e031faf922b9dda84a0fc3a55ac1a1dc51a07ac99b9dfee"
+    },
+    "lefthook": {
+      "source": "Fandhe-AI/agent-reference-skills",
+      "sourceType": "github",
+      "computedHash": "b14ba908e2b07dea7bded8296b24ec1a8f8e7c42c4118089141779ffe8500546"
+    },
+    "playwright": {
+      "source": "Fandhe-AI/agent-reference-skills",
+      "sourceType": "github",
+      "computedHash": "0452655be397a803a5a7bc82b87ffdd8a71d70cc64d8e7dffeb67cef51afce26"
+    },
+    "react-router-v7": {
+      "source": "Fandhe-AI/agent-reference-skills",
+      "sourceType": "github",
+      "computedHash": "2cedb996f12efedc8bc6eaf7217aceb6863e0e4bfb752dd69e0129175b4d7bf0"
+    },
+    "storybook": {
+      "source": "Fandhe-AI/agent-reference-skills",
+      "sourceType": "github",
+      "computedHash": "eaa261674bc9f397a4811c1e3f80aeb89b7902476c3b7a1acceb4498f08e04a4"
+    },
+    "supabase": {
+      "source": "Fandhe-AI/agent-reference-skills",
+      "sourceType": "github",
+      "computedHash": "7bc9bb9d8782b809da3dcfe02a0ab1a07415f192be928b5d892314e03437d510"
+    },
+    "syncpack": {
+      "source": "Fandhe-AI/agent-reference-skills",
+      "sourceType": "github",
+      "computedHash": "2a8a9343f8559a08aaf0ceaa689f1e71b6f2ea770d9be7bd8ddbc4a4b8623710"
+    },
+    "tsdoc": {
+      "source": "Fandhe-AI/agent-reference-skills",
+      "sourceType": "github",
+      "computedHash": "d49a00bd6154b6d70fe9c1a878a4a519a4791fcef14674c42a66bcc8ed599a30"
+    },
+    "turborepo": {
+      "source": "Fandhe-AI/agent-reference-skills",
+      "sourceType": "github",
+      "computedHash": "3c701ac2984beb4547df8a76eda4e25ac9c5530416cfa631cfaaec5bda39992c"
+    },
+    "typedoc": {
+      "source": "Fandhe-AI/agent-reference-skills",
+      "sourceType": "github",
+      "computedHash": "8d025884a65bb985238332cd052628a6afe6523733258880f207b8453b3cfb7d"
+    },
+    "update-docs": {
+      "source": "Fandhe-AI/agent-cli-skills",
+      "sourceType": "github",
+      "computedHash": "e7f3ec5c8c844ff880b5ac079494b67b0b16cad9e5b4a0f666ba333346311d9c"
+    },
+    "vercel-cli-with-tokens": {
+      "source": "vercel-labs/agent-skills",
+      "sourceType": "github",
+      "computedHash": "1e1ef4ae4ad838d0ad5f93a659bf065475705cd552bd3c9a2a4faade6098b030"
+    },
+    "vercel-composition-patterns": {
+      "source": "vercel-labs/agent-skills",
+      "sourceType": "github",
+      "computedHash": "f98931159fa9c7fed043bcd18a891a46dcf89ababa38df13a4c5b7b30dc0ce07"
+    },
+    "vercel-react-best-practices": {
+      "source": "vercel-labs/agent-skills",
+      "sourceType": "github",
+      "computedHash": "c858d2d9023e73edb4e5504868cb0e36313e58fd56af12ef888b43c5634a3c17"
+    },
+    "vitest": {
+      "source": "Fandhe-AI/agent-reference-skills",
+      "sourceType": "github",
+      "computedHash": "6f890696880cd9b9680f008e6b96f2887cc0599944d0f7e1eeed670b5d699a46"
+    },
+    "web-design-guidelines": {
+      "source": "vercel-labs/agent-skills",
+      "sourceType": "github",
+      "computedHash": "a6a44d5498f7e8f68289902f3dedfc6f38ae0cee1e96527c80724cf27f727c2a"
+    },
+    "zod": {
+      "source": "Fandhe-AI/agent-reference-skills",
+      "sourceType": "github",
+      "computedHash": "5a3495bfbcc66df0342cb20483bef09caa2eeb520ed83e6676cc2ec335197e81"
+    }
+  }
+}

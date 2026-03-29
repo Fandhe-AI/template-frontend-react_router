@@ -1,0 +1,9 @@
+{
+  "extends": "@repo/shared-config-typescript/base",
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["scripts"]
+}

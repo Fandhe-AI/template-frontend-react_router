@@ -1,0 +1,16 @@
+{
+  "name": "typedoc-app",
+  "version": "0.0.0",
+  "devDependencies": {
+    "@repo/shared-config-typedoc": "workspace:*",
+    "@repo/shared-config-typescript": "workspace:*",
+    "typedoc": "0.28.18",
+    "typescript": "6.0.2"
+  },
+  "private": true,
+  "scripts": {
+    "typedoc": "typedoc",
+    "typedoc:watch": "typedoc --watch"
+  },
+  "type": "module"
+}

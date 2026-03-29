@@ -1,0 +1,21 @@
+{
+  "extends": ["//"],
+  "tasks": {
+    "collect-blobs": {
+      "cache": false
+    },
+    "collect-coverage": {
+      "cache": false
+    },
+    "merge-reports": {
+      "dependsOn": ["collect-blobs"],
+      "inputs": ["blob-inputs/**"],
+      "outputs": ["reports/**"]
+    },
+    "vitest": {
+      "dependsOn": ["merge-reports"],
+      "cache": false,
+      "persistent": true
+    }
+  }
+}

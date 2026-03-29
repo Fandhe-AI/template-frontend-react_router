@@ -1,0 +1,9 @@
+{
+  "name": "@repo/shared-config-syncpack",
+  "description": "Syncpack configuration for monorepo dependency management",
+  "version": "0.0.0",
+  "exports": {
+    "./*": "./src/config/*.json"
+  },
+  "private": true
+}

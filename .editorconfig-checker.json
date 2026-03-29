@@ -1,0 +1,7 @@
+{
+  "Exclude": [
+    "\\.agents/",
+    "\\.claude/",
+    "pnpm-lock\\.yaml"
+  ]
+}
