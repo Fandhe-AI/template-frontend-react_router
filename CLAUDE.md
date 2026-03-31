@@ -113,6 +113,12 @@ packages/
 - `make setup-env` auto-detects all `.env.example` and generates `.env` (skips if `.env` is newer, backs up if older)
 - Hardcoded values (URLs, timeouts) are centralized in `src/consts/env.ts` per app
 
+## Knip Notes
+
+- Knip config is in `@fandhe-ai/shared-config-knip` (Git submodule: `packages/shared/config-knip/src/config/base.json`)
+- `apps/web` の `ignoreUnresolved: ["\\./\\+types/"]` は **削除禁止** — React Router の `+types/` ディレクトリは `react-router typegen` で生成されるため、CI 環境や `pnpm knip` 単体実行時には存在しない。この ignore を削除すると CI の knip チェックが失敗する
+- knip の ignore エントリを変更する際は `pnpm knip` をローカルで実行し、Configuration hints が出ないことを確認すること
+
 ## Storybook Conventions
 
 - Stories are auto-discovered from `packages/**/src/ui/**/*.stories.@(ts|tsx)`
