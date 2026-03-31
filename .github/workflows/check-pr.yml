@@ -23,6 +23,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
+        with:
+          submodules: recursive
 
       - name: Run reviewdog with Biome
         uses: mongolyy/reviewdog-action-biome@v1
@@ -36,6 +38,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
+        with:
+          submodules: recursive
 
       - name: Run editorconfig-checker
         uses: editorconfig-checker/action-editorconfig-checker@main
@@ -53,6 +57,7 @@ jobs:
         uses: actions/checkout@v5
         with:
           fetch-depth: 0
+          submodules: recursive
 
       - name: Setup pnpm and Node.js
         uses: ./.github/actions/setup-pnpm
@@ -73,6 +78,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
+        with:
+          submodules: recursive
 
       - name: Setup pnpm and Node.js
         uses: ./.github/actions/setup-pnpm
@@ -90,6 +97,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
+        with:
+          submodules: recursive
 
       - name: Setup pnpm and Node.js
         uses: ./.github/actions/setup-pnpm
@@ -107,6 +116,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
+        with:
+          submodules: recursive
 
       - name: Setup pnpm and Node.js
         uses: ./.github/actions/setup-pnpm
@@ -124,6 +135,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
+        with:
+          submodules: recursive
 
       - name: Setup pnpm and Node.js
         uses: ./.github/actions/setup-pnpm
@@ -147,6 +160,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
+        with:
+          submodules: recursive
 
       - name: Setup pnpm and Node.js
         uses: ./.github/actions/setup-pnpm
@@ -176,6 +191,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
+        with:
+          submodules: recursive
 
       - name: Setup pnpm and Node.js
         uses: ./.github/actions/setup-pnpm
@@ -196,6 +213,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
+        with:
+          submodules: recursive
 
       - name: Setup pnpm and Node.js
         uses: ./.github/actions/setup-pnpm
@@ -217,6 +236,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
+        with:
+          submodules: recursive
 
       - name: Setup pnpm and Node.js
         uses: ./.github/actions/setup-pnpm
