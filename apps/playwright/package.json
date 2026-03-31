@@ -2,9 +2,9 @@
   "name": "playwright",
   "version": "0.0.0",
   "devDependencies": {
-    "@playwright/test": "1.58.2",
     "@fandhe-ai/shared-config-playwright": "workspace:*",
     "@fandhe-ai/shared-config-typescript": "workspace:*",
+    "@playwright/test": "1.58.2",
     "@types/node": "25",
     "typescript": "6.0.2"
   },
