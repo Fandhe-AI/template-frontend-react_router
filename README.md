@@ -55,15 +55,15 @@ packages/
   features/           — FSD features レイヤー
   entities/           — FSD entities レイヤー
   shared/
-    config-biome/     — Biome 設定 (@repo/shared-config-biome)
-    config-commitlint/ — Commitlint 設定 (@repo/shared-config-commitlint)
-    config-knip/      — Knip 設定 (@repo/shared-config-knip)
-    config-playwright/ — Playwright 設定 (@repo/shared-config-playwright)
-    config-storybook/ — Storybook 設定 (@repo/shared-config-storybook)
-    config-syncpack/  — Syncpack 設定 (@repo/shared-config-syncpack)
-    config-typescript/ — TypeScript 設定 (@repo/shared-config-typescript)
-    config-typedoc/   — TypeDoc 設定 (@repo/shared-config-typedoc)
-    config-vitest/    — Vitest 設定 (@repo/shared-config-vitest)
+    config-biome/     — Biome 設定 (@fandhe-ai/shared-config-biome)
+    config-commitlint/ — Commitlint 設定 (@fandhe-ai/shared-config-commitlint)
+    config-knip/      — Knip 設定 (@fandhe-ai/shared-config-knip)
+    config-playwright/ — Playwright 設定 (@fandhe-ai/shared-config-playwright)
+    config-storybook/ — Storybook 設定 (@fandhe-ai/shared-config-storybook)
+    config-syncpack/  — Syncpack 設定 (@fandhe-ai/shared-config-syncpack)
+    config-typescript/ — TypeScript 設定 (@fandhe-ai/shared-config-typescript)
+    config-typedoc/   — TypeDoc 設定 (@fandhe-ai/shared-config-typedoc)
+    config-vitest/    — Vitest 設定 (@fandhe-ai/shared-config-vitest)
     sandbox/          — dev tooling 検証用 (@repo/shared-sandbox)
 supabase/             — Supabase ローカル開発設定・マイグレーション
 docs/                 — 詳細ドキュメント

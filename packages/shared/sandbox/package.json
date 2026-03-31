@@ -6,8 +6,8 @@
     "react": "19.2.4"
   },
   "devDependencies": {
-    "@repo/shared-config-typescript": "workspace:*",
-    "@repo/shared-config-vitest": "workspace:*",
+    "@fandhe-ai/shared-config-typescript": "workspace:*",
+    "@fandhe-ai/shared-config-vitest": "workspace:*",
     "@storybook/react-vite": "10.3.3",
     "@testing-library/react": "16.3.2",
     "@types/node": "25",

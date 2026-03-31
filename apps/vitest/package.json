@@ -2,7 +2,7 @@
   "name": "vitest-app",
   "version": "0.0.0",
   "devDependencies": {
-    "@repo/shared-config-typescript": "workspace:*",
+    "@fandhe-ai/shared-config-typescript": "workspace:*",
     "@types/node": "25",
     "@vitest/ui": "4.1.2",
     "tsx": "4.21.0",

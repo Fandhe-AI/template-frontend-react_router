@@ -14,16 +14,16 @@ importers:
       '@commitlint/cli':
         specifier: 20.5.0
         version: 20.5.0(@types/node@25.5.0)(conventional-commits-parser@6.3.0)(typescript@6.0.2)
-      '@repo/shared-config-biome':
+      '@fandhe-ai/shared-config-biome':
         specifier: workspace:*
         version: link:packages/shared/config-biome
-      '@repo/shared-config-commitlint':
+      '@fandhe-ai/shared-config-commitlint':
         specifier: workspace:*
         version: link:packages/shared/config-commitlint
-      '@repo/shared-config-knip':
+      '@fandhe-ai/shared-config-knip':
         specifier: workspace:*
         version: link:packages/shared/config-knip
-      '@repo/shared-config-syncpack':
+      '@fandhe-ai/shared-config-syncpack':
         specifier: workspace:*
         version: link:packages/shared/config-syncpack
       knip:
@@ -47,15 +47,15 @@ importers:
 
   apps/playwright:
     devDependencies:
+      '@fandhe-ai/shared-config-playwright':
+        specifier: workspace:*
+        version: link:../../packages/shared/config-playwright
+      '@fandhe-ai/shared-config-typescript':
+        specifier: workspace:*
+        version: link:../../packages/shared/config-typescript
       '@playwright/test':
         specifier: 1.58.2
         version: 1.58.2
-      '@repo/shared-config-playwright':
-        specifier: workspace:*
-        version: link:../../packages/shared/config-playwright
-      '@repo/shared-config-typescript':
-        specifier: workspace:*
-        version: link:../../packages/shared/config-typescript
       '@types/node':
         specifier: '25'
         version: 25.5.0
@@ -65,10 +65,10 @@ importers:
 
   apps/storybook:
     devDependencies:
-      '@repo/shared-config-storybook':
+      '@fandhe-ai/shared-config-storybook':
         specifier: workspace:*
         version: link:../../packages/shared/config-storybook
-      '@repo/shared-config-typescript':
+      '@fandhe-ai/shared-config-typescript':
         specifier: workspace:*
         version: link:../../packages/shared/config-typescript
       '@storybook/react-vite':
@@ -92,10 +92,10 @@ importers:
 
   apps/typedoc:
     devDependencies:
-      '@repo/shared-config-typedoc':
+      '@fandhe-ai/shared-config-typedoc':
         specifier: workspace:*
         version: link:../../packages/shared/config-typedoc
-      '@repo/shared-config-typescript':
+      '@fandhe-ai/shared-config-typescript':
         specifier: workspace:*
         version: link:../../packages/shared/config-typescript
       typedoc:
@@ -107,7 +107,7 @@ importers:
 
   apps/vitest:
     devDependencies:
-      '@repo/shared-config-typescript':
+      '@fandhe-ai/shared-config-typescript':
         specifier: workspace:*
         version: link:../../packages/shared/config-typescript
       '@types/node':
@@ -177,15 +177,15 @@ importers:
         specifier: 7.13.2
         version: 7.13.2(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
     devDependencies:
+      '@fandhe-ai/shared-config-typescript':
+        specifier: workspace:*
+        version: link:../../packages/shared/config-typescript
+      '@fandhe-ai/shared-config-vitest':
+        specifier: workspace:*
+        version: link:../../packages/shared/config-vitest
       '@react-router/dev':
         specifier: 7.13.2
         version: 7.13.2(@react-router/serve@7.13.2(react-router@7.13.2(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(typescript@6.0.2))(@types/node@25.5.0)(babel-plugin-macros@3.1.0)(jiti@2.6.1)(lightningcss@1.32.0)(react-router@7.13.2(react-dom@19.2.4(react@19.2.4))(react@19.2.4))(tsx@4.21.0)(typescript@6.0.2)(vite@8.0.3(@types/node@25.5.0)(esbuild@0.27.4)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.2))(yaml@2.8.2)
-      '@repo/shared-config-typescript':
-        specifier: workspace:*
-        version: link:../../packages/shared/config-typescript
-      '@repo/shared-config-vitest':
-        specifier: workspace:*
-        version: link:../../packages/shared/config-vitest
       '@testing-library/react':
         specifier: 16.3.2
         version: 16.3.2(@testing-library/dom@10.4.1)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -235,7 +235,7 @@ importers:
 
   packages/shared/config-storybook:
     devDependencies:
-      '@repo/shared-config-typescript':
+      '@fandhe-ai/shared-config-typescript':
         specifier: workspace:*
         version: link:../config-typescript
       storybook:
@@ -263,7 +263,7 @@ importers:
         specifier: 4.1.2
         version: 4.1.2(@types/node@25.5.0)(@vitest/ui@4.1.2)(happy-dom@20.8.9)(vite@8.0.3(@types/node@25.5.0)(esbuild@0.27.4)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.2))
     devDependencies:
-      '@repo/shared-config-typescript':
+      '@fandhe-ai/shared-config-typescript':
         specifier: workspace:*
         version: link:../config-typescript
       typescript:
@@ -276,10 +276,10 @@ importers:
         specifier: 19.2.4
         version: 19.2.4
     devDependencies:
-      '@repo/shared-config-typescript':
+      '@fandhe-ai/shared-config-typescript':
         specifier: workspace:*
         version: link:../config-typescript
-      '@repo/shared-config-vitest':
+      '@fandhe-ai/shared-config-vitest':
         specifier: workspace:*
         version: link:../config-vitest
       '@storybook/react-vite':

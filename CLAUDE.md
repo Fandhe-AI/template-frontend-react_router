@@ -72,15 +72,15 @@ packages/
   features/           — FSD features layer
   entities/           — FSD entities layer
   shared/
-    config-biome/     — Shared Biome configuration (@repo/shared-config-biome)
-    config-commitlint/ — Shared Commitlint configuration (@repo/shared-config-commitlint)
-    config-knip/      — Shared Knip configuration (@repo/shared-config-knip)
-    config-playwright/ — Shared Playwright configuration (@repo/shared-config-playwright)
-    config-storybook/ — Shared Storybook configuration (@repo/shared-config-storybook)
-    config-syncpack/  — Shared Syncpack configuration (@repo/shared-config-syncpack)
-    config-typescript/ — Shared tsconfig templates (@repo/shared-config-typescript)
-    config-typedoc/   — Shared TypeDoc configuration (@repo/shared-config-typedoc)
-    config-vitest/    — Shared Vitest configuration (@repo/shared-config-vitest)
+    config-biome/     — Shared Biome configuration (@fandhe-ai/shared-config-biome)
+    config-commitlint/ — Shared Commitlint configuration (@fandhe-ai/shared-config-commitlint)
+    config-knip/      — Shared Knip configuration (@fandhe-ai/shared-config-knip)
+    config-playwright/ — Shared Playwright configuration (@fandhe-ai/shared-config-playwright)
+    config-storybook/ — Shared Storybook configuration (@fandhe-ai/shared-config-storybook)
+    config-syncpack/  — Shared Syncpack configuration (@fandhe-ai/shared-config-syncpack)
+    config-typescript/ — Shared tsconfig templates (@fandhe-ai/shared-config-typescript)
+    config-typedoc/   — Shared TypeDoc configuration (@fandhe-ai/shared-config-typedoc)
+    config-vitest/    — Shared Vitest configuration (@fandhe-ai/shared-config-vitest)
     sandbox/          — Sandbox slice for verifying dev tooling (@repo/shared-sandbox)
 ```
 

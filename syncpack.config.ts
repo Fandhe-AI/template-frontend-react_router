@@ -1,6 +1,6 @@
-import fsdConfig from "@repo/shared-config-syncpack/fsd-dependency-direction" with { type: "json" };
-import strictConfig from "@repo/shared-config-syncpack/strict" with { type: "json" };
-import typesOnlyDevConfig from "@repo/shared-config-syncpack/types-only-dev" with { type: "json" };
+import fsdConfig from "@fandhe-ai/shared-config-syncpack/fsd-dependency-direction" with { type: "json" };
+import strictConfig from "@fandhe-ai/shared-config-syncpack/strict" with { type: "json" };
+import typesOnlyDevConfig from "@fandhe-ai/shared-config-syncpack/types-only-dev" with { type: "json" };
 import type { RcFile } from "syncpack";
 
 const config = {

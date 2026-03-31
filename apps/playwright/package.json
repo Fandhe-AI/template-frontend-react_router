@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "devDependencies": {
     "@playwright/test": "1.58.2",
-    "@repo/shared-config-playwright": "workspace:*",
-    "@repo/shared-config-typescript": "workspace:*",
+    "@fandhe-ai/shared-config-playwright": "workspace:*",
+    "@fandhe-ai/shared-config-typescript": "workspace:*",
     "@types/node": "25",
     "typescript": "6.0.2"
   },

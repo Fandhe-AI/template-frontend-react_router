@@ -12,9 +12,9 @@ Lint・フォーマット・インポート整理を 1 ツールで統合（ESLi
 
 | 共有設定                         | 内容                         |
 | -------------------------------- | ---------------------------- |
-| `@repo/shared-config-biome/core`   | フォーマッタ設定（EditorConfig 連携） |
-| `@repo/shared-config-biome/root`   | VCS 設定（Git / defaultBranch: main） |
-| `@repo/shared-config-biome/import` | インポート整理ルール         |
+| `@fandhe-ai/shared-config-biome/core`   | フォーマッタ設定（EditorConfig 連携） |
+| `@fandhe-ai/shared-config-biome/root`   | VCS 設定（Git / defaultBranch: main） |
+| `@fandhe-ai/shared-config-biome/import` | インポート整理ルール         |
 
 ### 対象ファイル
 
@@ -47,14 +47,14 @@ pnpm format:fix       # biome format --write .
 
 ### ワークスペース設定
 
-`@repo/shared-config-knip/base` で定義:
+`@fandhe-ai/shared-config-knip/base` で定義:
 
 | ワークスペース                         | エントリ                   | 特記                                                        |
 | -------------------------------------- | -------------------------- | ----------------------------------------------------------- |
 | `.`（ルート）                          | なし                       | `tsx` を ignoreDependencies、`playwright` を ignoreBinaries |
 | `apps/web`                             | `src/routes/**/*.tsx`      | —                                                           |
 | `apps/storybook`                       | `.storybook/**/*.{ts,tsx}` | —                                                           |
-| `apps/typedoc`                         | なし                       | `@repo/shared-config-typedoc` を ignoreDependencies         |
+| `apps/typedoc`                         | なし                       | `@fandhe-ai/shared-config-typedoc` を ignoreDependencies         |
 | `apps/playwright`                      | `src/**/*.ts`              | —                                                           |
 | `packages/shared/config-commitlint`    | `src/**/*.ts`              | `@commitlint/config-*` を ignoreDependencies                |
 | `packages/shared/config-typescript`    | `src/**/*.{ts,tsx,json}`   | `vite/client` を ignoreUnresolved                           |
@@ -99,7 +99,7 @@ Conventional Commits 形式でコミットメッセージを検証する。
 
 ### 設定
 
-`commitlint.config.ts` → `@repo/shared-config-commitlint/base`:
+`commitlint.config.ts` → `@fandhe-ai/shared-config-commitlint/base`:
 
 ```typescript
 extends: [
@@ -144,7 +144,7 @@ Git hooks マネージャー。3 つのフックを設定:
 
 パッケージレベルキャッシング方式を採用。各パッケージが `vitest run` を独立実行し、Turborepo がキャッシュを管理する。
 
-`@repo/shared-config-vitest/base` で共有設定を提供:
+`@fandhe-ai/shared-config-vitest/base` で共有設定を提供:
 
 | オプション         | 値                                                     |
 | ------------------ | ------------------------------------------------------ |

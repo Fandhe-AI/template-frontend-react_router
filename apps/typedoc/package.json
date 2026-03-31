@@ -2,8 +2,8 @@
   "name": "typedoc-app",
   "version": "0.0.0",
   "devDependencies": {
-    "@repo/shared-config-typedoc": "workspace:*",
-    "@repo/shared-config-typescript": "workspace:*",
+    "@fandhe-ai/shared-config-typedoc": "workspace:*",
+    "@fandhe-ai/shared-config-typescript": "workspace:*",
     "typedoc": "0.28.18",
     "typescript": "6.0.2"
   },
