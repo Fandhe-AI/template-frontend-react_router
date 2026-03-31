@@ -60,7 +60,7 @@ pnpm format:fix       # biome format --write .
 | `packages/shared/config-typescript`    | `src/**/*.{ts,tsx,json}`   | `vite/client` を ignoreUnresolved                           |
 | `packages/shared/config-vitest`        | `src/**/*.ts`              | —                                                           |
 | `packages/shared/config-storybook`     | `src/**/*.{ts,tsx}`        | —                                                           |
-| `packages/shared/config-playwright`    | `configs/**/*.ts`          | —                                                           |
+| `packages/shared/config-playwright`    | `src/**/*.ts`              | —                                                           |
 | `packages/shared/*`                    | `src/**/*.{ts,tsx,json}`   | —                                                           |
 
 ### コマンド

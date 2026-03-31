@@ -271,9 +271,18 @@ importers:
       '@commitlint/types':
         specifier: 20.5.0
         version: 20.5.0
+      '@fandhe-ai/shared-config-typescript':
+        specifier: workspace:*
+        version: link:../config-typescript
+      '@types/node':
+        specifier: '25'
+        version: 25.5.0
       lefthook:
         specifier: 2.1.4
         version: 2.1.4
+      typescript:
+        specifier: 6.0.2
+        version: 6.0.2
 
   packages/shared/config-storybook:
     devDependencies:
