@@ -12,11 +12,20 @@ make setup
 
 このコマンドは以下を実行します:
 
+1. Git Submodules の初期化（`packages/shared/config-*` パッケージ）
 1. `.env.example` から `.env` を生成
 1. Volta のインストール（Node バージョン管理）
 1. `pnpm install`（依存パッケージのインストール）
 1. Playwright ブラウザのインストール
 1. Lefthook（Git hooks）のインストール
+
+### Submodules の更新
+
+共有設定パッケージを最新に更新する場合:
+
+```sh
+make update-submodules
+```
 
 ## 個別セットアップガイド
 

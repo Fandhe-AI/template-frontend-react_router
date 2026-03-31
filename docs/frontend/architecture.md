@@ -18,15 +18,15 @@ packages/
   features/                — FSD features レイヤー（未実装）
   entities/                — FSD entities レイヤー（未実装）
   shared/
-    config-biome/          — 共有 Biome 設定 (@fandhe-ai/shared-config-biome)
-    config-commitlint/     — 共有 Commitlint 設定 (@fandhe-ai/shared-config-commitlint)
-    config-knip/           — 共有 Knip 設定 (@fandhe-ai/shared-config-knip)
-    config-playwright/     — 共有 Playwright 設定 (@fandhe-ai/shared-config-playwright)
-    config-storybook/      — 共有 Storybook 設定 (@fandhe-ai/shared-config-storybook)
-    config-syncpack/       — 共有 Syncpack 設定 (@fandhe-ai/shared-config-syncpack)
-    config-typescript/     — 共有 TypeScript 設定 (@fandhe-ai/shared-config-typescript)
-    config-typedoc/        — 共有 TypeDoc 設定 (@fandhe-ai/shared-config-typedoc)
-    config-vitest/         — 共有 Vitest 設定 (@fandhe-ai/shared-config-vitest)
+    config-biome/          — [submodule] 共有 Biome 設定 (@fandhe-ai/shared-config-biome)
+    config-commitlint/     — [submodule] 共有 Commitlint 設定 (@fandhe-ai/shared-config-commitlint)
+    config-knip/           — [submodule] 共有 Knip 設定 (@fandhe-ai/shared-config-knip)
+    config-playwright/     — [submodule] 共有 Playwright 設定 (@fandhe-ai/shared-config-playwright)
+    config-storybook/      — [submodule] 共有 Storybook 設定 (@fandhe-ai/shared-config-storybook)
+    config-syncpack/       — [submodule] 共有 Syncpack 設定 (@fandhe-ai/shared-config-syncpack)
+    config-typescript/     — [submodule] 共有 TypeScript 設定 (@fandhe-ai/shared-config-typescript)
+    config-typedoc/        — [submodule] 共有 TypeDoc 設定 (@fandhe-ai/shared-config-typedoc)
+    config-vitest/         — [submodule] 共有 Vitest 設定 (@fandhe-ai/shared-config-vitest)
     sandbox/               — 開発環境検証用スライス (@repo/shared-sandbox)
 ```
 
