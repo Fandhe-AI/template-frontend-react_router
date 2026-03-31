@@ -1,27 +1,27 @@
 [submodule "packages/shared/config-biome"]
-	path = packages/shared/config-biome
-	url = git@github.com:Fandhe-AI/shared-config-biome.git
+  path = packages/shared/config-biome
+  url = git@github.com:Fandhe-AI/shared-config-biome.git
 [submodule "packages/shared/config-commitlint"]
-	path = packages/shared/config-commitlint
-	url = git@github.com:Fandhe-AI/shared-config-commitlint.git
+  path = packages/shared/config-commitlint
+  url = git@github.com:Fandhe-AI/shared-config-commitlint.git
 [submodule "packages/shared/config-knip"]
-	path = packages/shared/config-knip
-	url = git@github.com:Fandhe-AI/shared-config-knip.git
+  path = packages/shared/config-knip
+  url = git@github.com:Fandhe-AI/shared-config-knip.git
 [submodule "packages/shared/config-playwright"]
-	path = packages/shared/config-playwright
-	url = git@github.com:Fandhe-AI/shared-config-playwright.git
+  path = packages/shared/config-playwright
+  url = git@github.com:Fandhe-AI/shared-config-playwright.git
 [submodule "packages/shared/config-storybook"]
-	path = packages/shared/config-storybook
-	url = git@github.com:Fandhe-AI/shared-config-storybook.git
+  path = packages/shared/config-storybook
+  url = git@github.com:Fandhe-AI/shared-config-storybook.git
 [submodule "packages/shared/config-syncpack"]
-	path = packages/shared/config-syncpack
-	url = git@github.com:Fandhe-AI/shared-config-syncpack.git
+  path = packages/shared/config-syncpack
+  url = git@github.com:Fandhe-AI/shared-config-syncpack.git
 [submodule "packages/shared/config-typedoc"]
-	path = packages/shared/config-typedoc
-	url = git@github.com:Fandhe-AI/shared-config-typedoc.git
+  path = packages/shared/config-typedoc
+  url = git@github.com:Fandhe-AI/shared-config-typedoc.git
 [submodule "packages/shared/config-typescript"]
-	path = packages/shared/config-typescript
-	url = git@github.com:Fandhe-AI/shared-config-typescript.git
+  path = packages/shared/config-typescript
+  url = git@github.com:Fandhe-AI/shared-config-typescript.git
 [submodule "packages/shared/config-vitest"]
-	path = packages/shared/config-vitest
-	url = git@github.com:Fandhe-AI/shared-config-vitest.git
+  path = packages/shared/config-vitest
+  url = git@github.com:Fandhe-AI/shared-config-vitest.git
