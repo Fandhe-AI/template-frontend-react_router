@@ -211,10 +211,26 @@ importers:
         specifier: 4.1.2
         version: 4.1.2(@types/node@25.5.0)(@vitest/ui@4.1.2)(happy-dom@20.8.9)(vite@8.0.3(@types/node@25.5.0)(esbuild@0.27.4)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.2))
 
-  packages/shared/config-biome: {}
+  packages/shared/config-biome:
+    devDependencies:
+      '@commitlint/cli':
+        specifier: 20.5.0
+        version: 20.5.0(@types/node@25.5.0)(conventional-commits-parser@6.3.0)(typescript@6.0.2)
+      '@commitlint/config-conventional':
+        specifier: 20.5.0
+        version: 20.5.0
+      '@commitlint/types':
+        specifier: 20.5.0
+        version: 20.5.0
+      lefthook:
+        specifier: 2.1.4
+        version: 2.1.4
 
   packages/shared/config-commitlint:
     devDependencies:
+      '@commitlint/cli':
+        specifier: 20.5.0
+        version: 20.5.0(@types/node@25.5.0)(conventional-commits-parser@6.3.0)(typescript@6.0.2)
       '@commitlint/config-conventional':
         specifier: 20.5.0
         version: 20.5.0
@@ -224,20 +240,61 @@ importers:
       '@commitlint/types':
         specifier: 20.5.0
         version: 20.5.0
+      lefthook:
+        specifier: 2.1.4
+        version: 2.1.4
 
-  packages/shared/config-knip: {}
+  packages/shared/config-knip:
+    devDependencies:
+      '@commitlint/cli':
+        specifier: 20.5.0
+        version: 20.5.0(@types/node@25.5.0)(conventional-commits-parser@6.3.0)(typescript@6.0.2)
+      '@commitlint/config-conventional':
+        specifier: 20.5.0
+        version: 20.5.0
+      '@commitlint/types':
+        specifier: 20.5.0
+        version: 20.5.0
+      lefthook:
+        specifier: 2.1.4
+        version: 2.1.4
 
   packages/shared/config-playwright:
     dependencies:
       '@playwright/test':
         specifier: 1.58.2
         version: 1.58.2
+    devDependencies:
+      '@commitlint/cli':
+        specifier: 20.5.0
+        version: 20.5.0(@types/node@25.5.0)(conventional-commits-parser@6.3.0)(typescript@6.0.2)
+      '@commitlint/config-conventional':
+        specifier: 20.5.0
+        version: 20.5.0
+      '@commitlint/types':
+        specifier: 20.5.0
+        version: 20.5.0
+      lefthook:
+        specifier: 2.1.4
+        version: 2.1.4
 
   packages/shared/config-storybook:
     devDependencies:
+      '@commitlint/cli':
+        specifier: 20.5.0
+        version: 20.5.0(@types/node@25.5.0)(conventional-commits-parser@6.3.0)(typescript@6.0.2)
+      '@commitlint/config-conventional':
+        specifier: 20.5.0
+        version: 20.5.0
+      '@commitlint/types':
+        specifier: 20.5.0
+        version: 20.5.0
       '@fandhe-ai/shared-config-typescript':
         specifier: workspace:*
         version: link:../config-typescript
+      lefthook:
+        specifier: 2.1.4
+        version: 2.1.4
       storybook:
         specifier: 10.3.3
         version: 10.3.3(@testing-library/dom@10.4.1)(prettier@3.7.4)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
@@ -245,11 +302,50 @@ importers:
         specifier: 6.0.2
         version: 6.0.2
 
-  packages/shared/config-syncpack: {}
+  packages/shared/config-syncpack:
+    devDependencies:
+      '@commitlint/cli':
+        specifier: 20.5.0
+        version: 20.5.0(@types/node@25.5.0)(conventional-commits-parser@6.3.0)(typescript@6.0.2)
+      '@commitlint/config-conventional':
+        specifier: 20.5.0
+        version: 20.5.0
+      '@commitlint/types':
+        specifier: 20.5.0
+        version: 20.5.0
+      lefthook:
+        specifier: 2.1.4
+        version: 2.1.4
 
-  packages/shared/config-typedoc: {}
+  packages/shared/config-typedoc:
+    devDependencies:
+      '@commitlint/cli':
+        specifier: 20.5.0
+        version: 20.5.0(@types/node@25.5.0)(conventional-commits-parser@6.3.0)(typescript@6.0.2)
+      '@commitlint/config-conventional':
+        specifier: 20.5.0
+        version: 20.5.0
+      '@commitlint/types':
+        specifier: 20.5.0
+        version: 20.5.0
+      lefthook:
+        specifier: 2.1.4
+        version: 2.1.4
 
-  packages/shared/config-typescript: {}
+  packages/shared/config-typescript:
+    devDependencies:
+      '@commitlint/cli':
+        specifier: 20.5.0
+        version: 20.5.0(@types/node@25.5.0)(conventional-commits-parser@6.3.0)(typescript@6.0.2)
+      '@commitlint/config-conventional':
+        specifier: 20.5.0
+        version: 20.5.0
+      '@commitlint/types':
+        specifier: 20.5.0
+        version: 20.5.0
+      lefthook:
+        specifier: 2.1.4
+        version: 2.1.4
 
   packages/shared/config-vitest:
     dependencies:
@@ -263,9 +359,21 @@ importers:
         specifier: 4.1.2
         version: 4.1.2(@types/node@25.5.0)(@vitest/ui@4.1.2)(happy-dom@20.8.9)(vite@8.0.3(@types/node@25.5.0)(esbuild@0.27.4)(jiti@2.6.1)(tsx@4.21.0)(yaml@2.8.2))
     devDependencies:
+      '@commitlint/cli':
+        specifier: 20.5.0
+        version: 20.5.0(@types/node@25.5.0)(conventional-commits-parser@6.3.0)(typescript@6.0.2)
+      '@commitlint/config-conventional':
+        specifier: 20.5.0
+        version: 20.5.0
+      '@commitlint/types':
+        specifier: 20.5.0
+        version: 20.5.0
       '@fandhe-ai/shared-config-typescript':
         specifier: workspace:*
         version: link:../config-typescript
+      lefthook:
+        specifier: 2.1.4
+        version: 2.1.4
       typescript:
         specifier: 6.0.2
         version: 6.0.2
