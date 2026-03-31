@@ -129,7 +129,7 @@ body {
 
 ```json
 {
-  "extends": "@repo/shared-config-typescript/react-router",
+  "extends": "@fandhe-ai/shared-config-typescript/react-router",
   "compilerOptions": {
     "rootDirs": [".", "./.react-router/types"],
     "paths": {
@@ -166,8 +166,8 @@ react-router-serve ./build/server/index.js
 
 | 種別         | パッケージ                                                |
 | ------------ | --------------------------------------------------------- |
-| dependencies | `react`, `react-dom`, `react-router`, `@react-router/node`, `@react-router/serve`, `@chakra-ui/react`, `@emotion/react`, `@emotion/cache`, `@emotion/server`, `@supabase/ssr`, `@supabase/supabase-js`, `isbot`, `next-themes`, `react-icons`, `@repo/shared-sandbox` |
-| devDependencies | `@react-router/dev`, `vite`, `vitest`, `@vitest/coverage-v8`, `typescript`, `@types/node`, `@types/react`, `@types/react-dom`, `@testing-library/react`, `@repo/shared-config-typescript`, `@repo/shared-config-vitest` |
+| dependencies | `react`, `react-dom`, `react-router`, `@react-router/node`, `@react-router/serve`, `@chakra-ui/react`, `@emotion/react`, `@emotion/cache`, `@emotion/server`, `@supabase/ssr`, `@supabase/supabase-js`, `isbot`, `next-themes`, `react-icons` |
+| devDependencies | `@react-router/dev`, `vite`, `vitest`, `@vitest/coverage-v8`, `typescript`, `@types/node`, `@types/react`, `@types/react-dom`, `@testing-library/react`, `@fandhe-ai/shared-config-typescript`, `@fandhe-ai/shared-config-vitest` |
 
 ### npm scripts
 

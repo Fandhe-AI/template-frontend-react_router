@@ -1,8 +1,8 @@
 {
   "extends": [
-    "@repo/shared-config-biome/core",
-    "@repo/shared-config-biome/root",
-    "@repo/shared-config-biome/import"
+    "@fandhe-ai/shared-config-biome/core",
+    "@fandhe-ai/shared-config-biome/root",
+    "@fandhe-ai/shared-config-biome/import"
   ],
   "files": {
     "includes": [

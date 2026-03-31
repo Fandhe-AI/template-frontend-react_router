@@ -1,5 +1,5 @@
 {
-  "extends": "@repo/shared-config-typescript/react-library",
+  "extends": "@fandhe-ai/shared-config-typescript/react-library",
   "compilerOptions": {
     "outDir": "dist",
     "strictNullChecks": true,

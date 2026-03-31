@@ -7,7 +7,6 @@
     "@emotion/server": "11.11.0",
     "@react-router/node": "7.13.2",
     "@react-router/serve": "7.13.2",
-    "@repo/shared-sandbox": "workspace:*",
     "@supabase/ssr": "0.9.0",
     "@supabase/supabase-js": "2.100.1",
     "isbot": "5.1.36",
@@ -18,9 +17,9 @@
     "react-router": "7.13.2"
   },
   "devDependencies": {
+    "@fandhe-ai/shared-config-typescript": "workspace:*",
+    "@fandhe-ai/shared-config-vitest": "workspace:*",
     "@react-router/dev": "7.13.2",
-    "@repo/shared-config-typescript": "workspace:*",
-    "@repo/shared-config-vitest": "workspace:*",
     "@testing-library/react": "16.3.2",
     "@types/node": "25",
     "@types/react": "19.2.14",

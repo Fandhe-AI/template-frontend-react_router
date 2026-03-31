@@ -1,3 +1,3 @@
-import { sharedConfig } from "@repo/shared-config-vitest/base";
+import { sharedConfig } from "@fandhe-ai/shared-config-vitest/base";
 
 export default sharedConfig;

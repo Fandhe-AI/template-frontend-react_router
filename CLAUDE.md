@@ -51,8 +51,10 @@ pnpm knip                         # Detect unused code/deps/exports
 pnpm knip:fix                     # Auto-fix unused exports
 
 # Initial Setup
-make setup                        # Run all setup steps (env, volta, pnpm, playwright, lefthook)
+make setup                        # Run all setup steps (submodules, env, volta, pnpm, playwright, lefthook)
 make setup-env                    # Generate .env from .env.example (with backup)
+make setup-submodules             # git submodule update --init --recursive
+make update-submodules            # git submodule update --remote --recursive
 ```
 
 ## Architecture
@@ -72,15 +74,15 @@ packages/
   features/           — FSD features layer
   entities/           — FSD entities layer
   shared/
-    config-biome/     — Shared Biome configuration (@repo/shared-config-biome)
-    config-commitlint/ — Shared Commitlint configuration (@repo/shared-config-commitlint)
-    config-knip/      — Shared Knip configuration (@repo/shared-config-knip)
-    config-playwright/ — Shared Playwright configuration (@repo/shared-config-playwright)
-    config-storybook/ — Shared Storybook configuration (@repo/shared-config-storybook)
-    config-syncpack/  — Shared Syncpack configuration (@repo/shared-config-syncpack)
-    config-typescript/ — Shared tsconfig templates (@repo/shared-config-typescript)
-    config-typedoc/   — Shared TypeDoc configuration (@repo/shared-config-typedoc)
-    config-vitest/    — Shared Vitest configuration (@repo/shared-config-vitest)
+    config-biome/     — [submodule] Shared Biome configuration (@fandhe-ai/shared-config-biome)
+    config-commitlint/ — [submodule] Shared Commitlint configuration (@fandhe-ai/shared-config-commitlint)
+    config-knip/      — [submodule] Shared Knip configuration (@fandhe-ai/shared-config-knip)
+    config-playwright/ — [submodule] Shared Playwright configuration (@fandhe-ai/shared-config-playwright)
+    config-storybook/ — [submodule] Shared Storybook configuration (@fandhe-ai/shared-config-storybook)
+    config-syncpack/  — [submodule] Shared Syncpack configuration (@fandhe-ai/shared-config-syncpack)
+    config-typescript/ — [submodule] Shared tsconfig templates (@fandhe-ai/shared-config-typescript)
+    config-typedoc/   — [submodule] Shared TypeDoc configuration (@fandhe-ai/shared-config-typedoc)
+    config-vitest/    — [submodule] Shared Vitest configuration (@fandhe-ai/shared-config-vitest)
     sandbox/          — Sandbox slice for verifying dev tooling (@repo/shared-sandbox)
 ```
 
@@ -110,6 +112,12 @@ packages/
 - `.env.example` files define required env vars with local defaults
 - `make setup-env` auto-detects all `.env.example` and generates `.env` (skips if `.env` is newer, backs up if older)
 - Hardcoded values (URLs, timeouts) are centralized in `src/consts/env.ts` per app
+
+## Knip Notes
+
+- Knip config is in `@fandhe-ai/shared-config-knip` (Git submodule: `packages/shared/config-knip/src/config/base.json`)
+- `apps/web` の `ignoreUnresolved: ["\\./\\+types/"]` は **削除禁止** — React Router の `+types/` ディレクトリは `react-router typegen` で生成されるため、CI 環境や `pnpm knip` 単体実行時には存在しない。この ignore を削除すると CI の knip チェックが失敗する
+- knip の ignore エントリを変更する際は `pnpm knip` をローカルで実行し、Configuration hints が出ないことを確認すること
 
 ## Storybook Conventions
 

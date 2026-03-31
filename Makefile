@@ -1,4 +1,10 @@
-setup: setup-env setup-volta setup-pnpm setup-playwright setup-lefthook
+setup: setup-submodules setup-env setup-volta setup-pnpm setup-playwright setup-lefthook
+
+setup-submodules:
+	git submodule update --init --recursive
+
+update-submodules:
+	git submodule update --remote --recursive
 
 setup-env:
 	@find apps packages -name '.env.example' | while read example; do \

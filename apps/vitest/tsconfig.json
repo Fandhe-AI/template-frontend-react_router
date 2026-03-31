@@ -1,5 +1,5 @@
 {
-  "extends": "@repo/shared-config-typescript/base",
+  "extends": "@fandhe-ai/shared-config-typescript/base",
   "compilerOptions": {
     "paths": {
       "@/*": ["./src/*"]

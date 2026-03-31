@@ -1,5 +1,5 @@
 export default {
-  extends: ["@repo/shared-config-commitlint/base"],
+  extends: ["@fandhe-ai/shared-config-commitlint/base"],
   rules: {
     "scope-enum": [
       2,

@@ -32,7 +32,7 @@ FSD スライスを新規作成する。
     "react": "19.2.4"
   },
   "devDependencies": {
-    "@repo/shared-config-typescript": "workspace:*",
+    "@fandhe-ai/shared-config-typescript": "workspace:*",
     "@types/node": "22",
     "@types/react": "19.2.14",
     "typescript": "5.9.2"
@@ -47,7 +47,7 @@ FSD スライスを新規作成する。
 
 ```json
 {
-  "extends": "@repo/shared-config-typescript/react-library",
+  "extends": "@fandhe-ai/shared-config-typescript/react-library",
   "compilerOptions": {
     "outDir": "dist",
     "strictNullChecks": true

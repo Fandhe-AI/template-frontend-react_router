@@ -1,4 +1,4 @@
-import { createBaseConfig } from "@repo/shared-config-playwright/configs/base";
+import { createBaseConfig } from "@fandhe-ai/shared-config-playwright/configs/base";
 import {
   BASE_URL,
   EXPECT_TIMEOUT,
