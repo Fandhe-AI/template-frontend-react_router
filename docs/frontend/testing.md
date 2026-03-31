@@ -132,7 +132,7 @@ pnpm storybook:build          # 静的ビルド
 | ファイル | 役割 |
 | --- | --- |
 | `apps/playwright/playwright.config.ts` | Playwright メイン設定 |
-| `@fandhe-ai/shared-config-playwright/base` | 共有設定テンプレート |
+| `@fandhe-ai/shared-config-playwright/base` | 共有設定テンプレート（`createBaseConfig`） |
 
 ### 共有設定 (`@fandhe-ai/shared-config-playwright`)
 
