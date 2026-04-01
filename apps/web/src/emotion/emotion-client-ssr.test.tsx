@@ -1,7 +1,6 @@
 // @vitest-environment node
 
 import type { EmotionCache } from "@emotion/cache";
-import { createElement } from "react";
 import { renderToString } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
 import { ClientCacheProvider, useInjectStyles } from "./emotion-client";
@@ -20,11 +19,13 @@ describe("emotion-client SSR", () => {
 
     const TestComponent = () => {
       useInjectStyles(mockCache);
-      return createElement("div", null, "ssr-test");
+      return <div data-testid="ssr-test">ssr-test</div>;
     };
 
     const html = renderToString(
-      createElement(ClientCacheProvider, null, createElement(TestComponent)),
+      <ClientCacheProvider>
+        <TestComponent />
+      </ClientCacheProvider>,
     );
 
     expect(html).toContain("ssr-test");

@@ -83,15 +83,15 @@ describe("createSupabaseServerClient", () => {
     vi.stubEnv("SUPABASE_URL", "https://test.supabase.co");
     vi.stubEnv("SUPABASE_ANON_KEY", "test-anon-key");
 
-    const request = new Request("http://localhost", {
-      headers: { Cookie: "a=1; b" },
-    });
-    createSupabaseServerClient(request);
-
     mockParseCookieHeader.mockReturnValueOnce([
       { name: "a", value: "1" },
       { name: "b", value: null },
     ]);
+
+    const request = new Request("http://localhost", {
+      headers: { Cookie: "a=1; b" },
+    });
+    createSupabaseServerClient(request);
 
     const cookies = capturedOptions?.cookies.getAll();
     expect(cookies).toEqual([{ name: "a", value: "1" }]);

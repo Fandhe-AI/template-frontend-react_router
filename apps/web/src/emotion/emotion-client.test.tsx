@@ -46,7 +46,8 @@ describe("useInjectStyles", () => {
 
     expect(screen.getByTestId("test")).toBeDefined();
     expect(mockCache.sheet.container).toBe(document.head);
-    expect(mockFlush).toHaveBeenCalled();
+    expect(mockFlush).toHaveBeenCalledTimes(1);
+    expect(mockInsertTag).toHaveBeenCalledTimes(1);
     expect(mockInsertTag).toHaveBeenCalledWith(mockTag);
   });
 });
