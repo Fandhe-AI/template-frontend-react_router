@@ -11,6 +11,7 @@ describe("routes", () => {
     expect(indexRoute).toBeDefined();
     expect(indexRoute).toMatchObject({
       file: "routes/home.tsx",
+      index: true,
     });
   });
 });

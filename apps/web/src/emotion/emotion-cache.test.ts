@@ -1,5 +1,5 @@
 import createCache from "@emotion/cache";
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { createEmotionCache } from "./emotion-cache";
 
 vi.mock("@emotion/cache", () => ({
@@ -7,6 +7,10 @@ vi.mock("@emotion/cache", () => ({
 }));
 
 describe("createEmotionCache", () => {
+  afterEach(() => {
+    vi.clearAllMocks();
+  });
+
   it("calls createCache with key 'css'", () => {
     createEmotionCache();
     expect(createCache).toHaveBeenCalledWith({ key: "css" });

@@ -1,10 +1,10 @@
-import { ChakraProvider, defaultSystem } from "@chakra-ui/react";
 import { render, screen } from "@testing-library/react";
+import type { ReactNode } from "react";
 import { describe, expect, it, vi } from "vitest";
 import { ColorModeProvider, useColorMode } from "./color-mode";
 
 vi.mock("next-themes", () => ({
-  ThemeProvider: ({ children }: { children: React.ReactNode }) => (
+  ThemeProvider: ({ children }: { children: ReactNode }) => (
     <div data-testid="theme-provider">{children}</div>
   ),
   useTheme: () => ({
@@ -25,25 +25,14 @@ describe("ColorModeProvider", () => {
   });
 });
 
-function TestConsumer() {
-  const { colorMode, toggleColorMode } = useColorMode();
-  return (
-    <div>
-      <span data-testid="color-mode">{colorMode}</span>
-      <button type="button" onClick={toggleColorMode}>
-        toggle
-      </button>
-    </div>
-  );
-}
+const TestConsumer = () => {
+  const { colorMode } = useColorMode();
+  return <span data-testid="color-mode">{colorMode}</span>;
+};
 
 describe("useColorMode", () => {
   it("returns the current color mode", () => {
-    render(
-      <ChakraProvider value={defaultSystem}>
-        <TestConsumer />
-      </ChakraProvider>,
-    );
+    render(<TestConsumer />);
     expect(screen.getByTestId("color-mode").textContent).toBe("light");
   });
 });

@@ -1,10 +1,10 @@
-import { describe, expect, it, vi } from "vitest";
+import type { ReactNode } from "react";
+import { afterEach, describe, expect, it, vi } from "vitest";
 
 const mockHydrateRoot = vi.fn();
 
 vi.mock("react-dom/client", () => ({
-  hydrateRoot: (...args: [Document, React.ReactNode]) =>
-    mockHydrateRoot(...args),
+  hydrateRoot: (...args: [Document, ReactNode]) => mockHydrateRoot(...args),
 }));
 
 vi.mock("react-router/dom", () => ({
@@ -12,18 +12,21 @@ vi.mock("react-router/dom", () => ({
 }));
 
 vi.mock("./emotion/emotion-client", () => ({
-  ClientCacheProvider: ({ children }: { children: React.ReactNode }) =>
-    children,
+  ClientCacheProvider: ({ children }: { children: ReactNode }) => children,
 }));
 
 vi.mock("@chakra-ui/react", () => ({
-  ChakraProvider: ({ children }: { children: React.ReactNode }) => children,
+  ChakraProvider: ({ children }: { children: ReactNode }) => children,
   defaultSystem: {},
 }));
 
 describe("entry.client", () => {
+  afterEach(() => {
+    vi.resetModules();
+  });
+
   it("calls hydrateRoot on document", async () => {
     await import("./entry.client");
-    expect(mockHydrateRoot).toHaveBeenCalledWith(document, expect.anything());
+    expect(mockHydrateRoot).toHaveBeenCalledWith(document, expect.any(Object));
   });
 });

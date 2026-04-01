@@ -1,9 +1,10 @@
 import { render, screen } from "@testing-library/react";
+import type { ReactNode } from "react";
 import { describe, expect, it, vi } from "vitest";
 import { Provider } from "./provider";
 
 vi.mock("./color-mode", () => ({
-  ColorModeProvider: ({ children }: { children: React.ReactNode }) => (
+  ColorModeProvider: ({ children }: { children: ReactNode }) => (
     <div data-testid="color-mode-provider">{children}</div>
   ),
 }));

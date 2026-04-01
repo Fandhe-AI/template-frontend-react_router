@@ -3,8 +3,7 @@ import { describe, expect, it, vi } from "vitest";
 
 vi.mock("./emotion/emotion-server", () => ({
   createEmotion: () => ({
-    renderToString: (element: React.ReactElement) =>
-      `<html><body>mocked:${String((element as unknown as { props: { url: string } }).props.url)}</body></html>`,
+    renderToString: () => "<html><body>mocked</body></html>",
     injectStyles: (html: string) => html,
   }),
 }));
@@ -14,7 +13,7 @@ vi.mock("react-router", async () => {
     await vi.importActual<typeof import("react-router")>("react-router");
   return {
     ...actual,
-    ServerRouter: ({ url }: { url: string }) => url,
+    ServerRouter: () => null,
   };
 });
 

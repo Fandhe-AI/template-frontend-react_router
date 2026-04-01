@@ -22,9 +22,11 @@ describe("createEmotion", () => {
       const html = renderToString(<div>test</div>);
       const inputHtml = `<meta name="emotion-insertion-point" content="emotion-insertion-point"/>${html}`;
       const result = injectStyles(inputHtml);
-      expect(result).toContain(
-        '<meta name="emotion-insertion-point" content="emotion-insertion-point"/>',
-      );
+
+      const metaTag =
+        '<meta name="emotion-insertion-point" content="emotion-insertion-point"/>';
+      expect(result).toContain(metaTag);
+      expect(result.length).toBeGreaterThanOrEqual(inputHtml.length);
     });
 
     it("returns html unchanged when no emotion-insertion-point exists", () => {

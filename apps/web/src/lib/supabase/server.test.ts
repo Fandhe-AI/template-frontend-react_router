@@ -20,8 +20,8 @@ vi.mock("@supabase/ssr", () => ({
   parseCookieHeader: (header: string) => {
     if (!header) return [];
     return header.split("; ").map((pair) => {
-      const [name, value] = pair.split("=");
-      return { name, value };
+      const [name, ...rest] = pair.split("=");
+      return { name, value: rest.join("=") };
     });
   },
   serializeCookieHeader: (name: string, value: string, _options: unknown) =>
