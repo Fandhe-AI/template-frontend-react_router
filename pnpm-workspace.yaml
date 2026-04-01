@@ -9,3 +9,5 @@ packages:
 onlyBuiltDependencies:
   - esbuild
   - lefthook
+
+minimumReleaseAge: 10080

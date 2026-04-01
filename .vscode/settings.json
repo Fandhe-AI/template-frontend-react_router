@@ -10,6 +10,7 @@
     "dagre",
     "dotclaude",
     "elkjs",
+    "esbuild",
     "fandhe",
     "isbot",
     "knip",
