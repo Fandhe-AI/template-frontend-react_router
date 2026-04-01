@@ -12,18 +12,22 @@ interface CookieOptions {
 
 let capturedOptions: CookieOptions | undefined;
 
+const mockParseCookieHeader = vi.fn(
+  (header: string): { name: string; value: string | null }[] => {
+    if (!header) return [];
+    return header.split("; ").map((pair) => {
+      const [name, ...rest] = pair.split("=");
+      return { name: name ?? "", value: rest.join("=") };
+    });
+  },
+);
+
 vi.mock("@supabase/ssr", () => ({
   createServerClient: (_url: string, _key: string, options: CookieOptions) => {
     capturedOptions = options;
     return { from: vi.fn() };
   },
-  parseCookieHeader: (header: string) => {
-    if (!header) return [];
-    return header.split("; ").map((pair) => {
-      const [name, ...rest] = pair.split("=");
-      return { name, value: rest.join("=") };
-    });
-  },
+  parseCookieHeader: (...args: [string]) => mockParseCookieHeader(...args),
   serializeCookieHeader: (name: string, value: string, _options: unknown) =>
     `${name}=${value}; Path=/`,
 }));
@@ -32,6 +36,7 @@ describe("createSupabaseServerClient", () => {
   afterEach(() => {
     vi.unstubAllEnvs();
     capturedOptions = undefined;
+    mockParseCookieHeader.mockClear();
   });
 
   it("returns { supabase, headers } when env vars are set", () => {
@@ -72,6 +77,24 @@ describe("createSupabaseServerClient", () => {
       { name: "session", value: "abc123" },
       { name: "token", value: "xyz" },
     ]);
+  });
+
+  it("cookie getAll filters out cookies with null value", () => {
+    vi.stubEnv("SUPABASE_URL", "https://test.supabase.co");
+    vi.stubEnv("SUPABASE_ANON_KEY", "test-anon-key");
+
+    const request = new Request("http://localhost", {
+      headers: { Cookie: "a=1; b" },
+    });
+    createSupabaseServerClient(request);
+
+    mockParseCookieHeader.mockReturnValueOnce([
+      { name: "a", value: "1" },
+      { name: "b", value: null },
+    ]);
+
+    const cookies = capturedOptions?.cookies.getAll();
+    expect(cookies).toEqual([{ name: "a", value: "1" }]);
   });
 
   it("cookie setAll appends Set-Cookie headers", () => {
