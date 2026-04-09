@@ -1,4 +1,4 @@
-setup: setup-submodules setup-env setup-volta setup-pnpm setup-playwright setup-lefthook
+setup: setup-submodules setup-env setup-direnv setup-volta setup-pnpm setup-playwright setup-lefthook
 
 setup-submodules:
 	git submodule update --init --recursive
@@ -21,6 +21,14 @@ setup-env:
 			echo "$$env_file が古いため、$$env_file.$$timestamp にバックアップし、新しい $$env_file を作成しました"; \
 		fi; \
 	done
+
+setup-direnv:
+	@if command -v direnv >/dev/null 2>&1; then \
+		direnv allow .; \
+		echo "direnv allow を実行しました"; \
+	else \
+		echo "direnv が見つからないため、direnv allow をスキップしました"; \
+	fi
 
 setup-volta: volta-setup volta-install
 
