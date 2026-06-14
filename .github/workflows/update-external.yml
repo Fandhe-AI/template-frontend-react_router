@@ -66,12 +66,16 @@ jobs:
       contents: write
       pull-requests: write
     steps:
+      # owner を指定し、skills の取得元 (Fandhe-AI/agent-*-skills 等の
+      # 別リポジトリ) を読めるよう App インストールスコープまで広げる
+      # （public な取得元は認証不要。private なソースは App のインストールが必要）。
       - name: Generate GitHub App token
         id: app-token
         uses: actions/create-github-app-token@v3
         with:
           app-id: ${{ vars.AUTOMATION_APP_ID }}
           private-key: ${{ secrets.AUTOMATION_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
 
       # workflow_dispatch を main 以外から実行しても常に main 基準で更新を計算する
       - name: Checkout code
