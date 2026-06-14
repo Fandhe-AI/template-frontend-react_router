@@ -19,7 +19,7 @@ jobs:
   # --------------------------------------------------
   update-submodules:
     name: Submodule 更新
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     permissions:
       contents: write
       pull-requests: write
@@ -54,7 +54,7 @@ jobs:
   # --------------------------------------------------
   update-skills:
     name: Skills 更新
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     permissions:
       contents: write
       pull-requests: write
@@ -70,12 +70,6 @@ jobs:
         uses: actions/checkout@v5
         with:
           token: ${{ steps.app-token.outputs.token }}
-
-      # self-hosted ランナーでは npx skills 実行に Node.js が必要
-      - name: Setup Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version: "24.13.0"
 
       - name: Update skills and open PR
         uses: Fandhe-AI/actions/skills-update@c80ff94f229f86ba9e08723948c4dee0e1fb66bf # main
