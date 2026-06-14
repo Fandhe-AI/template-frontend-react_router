@@ -33,9 +33,12 @@ jobs:
           app-id: ${{ vars.AUTOMATION_APP_ID }}
           private-key: ${{ secrets.AUTOMATION_APP_PRIVATE_KEY }}
 
+      # workflow_dispatch を main 以外から実行しても常に main 基準で更新を計算する
+      # （base-branch: main へ無関係な差分が混入するのを防ぐ）
       - name: Checkout code
         uses: actions/checkout@v5
         with:
+          ref: main
           submodules: recursive
           token: ${{ steps.app-token.outputs.token }}
 
@@ -66,9 +69,11 @@ jobs:
           app-id: ${{ vars.AUTOMATION_APP_ID }}
           private-key: ${{ secrets.AUTOMATION_APP_PRIVATE_KEY }}
 
+      # workflow_dispatch を main 以外から実行しても常に main 基準で更新を計算する
       - name: Checkout code
         uses: actions/checkout@v5
         with:
+          ref: main
           token: ${{ steps.app-token.outputs.token }}
 
       - name: Update skills and open PR
