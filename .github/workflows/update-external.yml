@@ -1,0 +1,94 @@
+name: 外部参照の更新
+
+on:
+  schedule:
+    - cron: "0 0 * * 1" # 毎週月曜 0:00 UTC
+  workflow_dispatch: # 手動実行も可能
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
+jobs:
+  # --------------------------------------------------
+  # Submodule の更新
+  # Fandhe-AI/actions/submodule-update を利用
+  # --------------------------------------------------
+  update-submodules:
+    name: Submodule 更新
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      # GITHUB_TOKEN で作成した PR は後続 CI を発火しないため、
+      # CI 発火 + auto-merge を成立させるには App トークンを使う。
+      # owner を指定し、submodule (別リポジトリ) も読めるよう
+      # App インストールスコープまでトークンを広げる
+      # （App は本リポジトリと全 submodule リポジトリにインストールが必要）。
+      - name: Generate GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@v3
+        with:
+          app-id: ${{ vars.AUTOMATION_APP_ID }}
+          private-key: ${{ secrets.AUTOMATION_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+
+      # workflow_dispatch を main 以外から実行しても常に main 基準で更新を計算する
+      # （base-branch: main へ無関係な差分が混入するのを防ぐ）
+      - name: Checkout code
+        uses: actions/checkout@v5
+        with:
+          ref: main
+          submodules: recursive
+          token: ${{ steps.app-token.outputs.token }}
+
+      - name: Update submodules and open PR
+        uses: Fandhe-AI/actions/submodule-update@c80ff94f229f86ba9e08723948c4dee0e1fb66bf # main
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+          base-branch: main
+          pr-labels: dependencies
+          auto-merge: ${{ vars.SUBMODULE_AUTO_MERGE }}
+          auto-merge-allowlist: ${{ vars.SUBMODULE_AUTO_MERGE_ALLOWLIST }}
+
+  # --------------------------------------------------
+  # Skills の更新
+  # Fandhe-AI/actions/skills-update を利用
+  # --------------------------------------------------
+  update-skills:
+    name: Skills 更新
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      # owner を指定し、skills の取得元 (Fandhe-AI/agent-*-skills 等の
+      # 別リポジトリ) を読めるよう App インストールスコープまで広げる
+      # （public な取得元は認証不要。private なソースは App のインストールが必要）。
+      - name: Generate GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@v3
+        with:
+          app-id: ${{ vars.AUTOMATION_APP_ID }}
+          private-key: ${{ secrets.AUTOMATION_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+
+      # workflow_dispatch を main 以外から実行しても常に main 基準で更新を計算する
+      - name: Checkout code
+        uses: actions/checkout@v5
+        with:
+          ref: main
+          token: ${{ steps.app-token.outputs.token }}
+
+      - name: Update skills and open PR
+        uses: Fandhe-AI/actions/skills-update@c80ff94f229f86ba9e08723948c4dee0e1fb66bf # main
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+          base-branch: main
+          pr-labels: dependencies
+          auto-merge: ${{ vars.SKILLS_AUTO_MERGE }}
+          auto-merge-allowlist: ${{ vars.SKILLS_AUTO_MERGE_ALLOWLIST }}
