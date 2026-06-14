@@ -1,0 +1,112 @@
+name: 外部参照の更新
+
+on:
+  schedule:
+    - cron: "0 0 * * 1" # 毎週月曜 0:00 UTC
+  workflow_dispatch: # 手動実行も可能
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: ${{ github.workflow }}
+  cancel-in-progress: false
+
+jobs:
+  # --------------------------------------------------
+  # Submodule の更新
+  # --------------------------------------------------
+  update-submodules:
+    name: Submodule 更新
+    runs-on: self-hosted
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+        with:
+          submodules: recursive
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Update submodules to latest
+        run: git submodule update --remote --recursive
+
+      - name: Check for changes
+        id: check
+        run: |
+          if git diff --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create Pull Request
+        id: cpr
+        if: steps.check.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore: submodule を最新に更新"
+          branch: chore/update-submodules
+          delete-branch: true
+          title: "chore: submodule を最新に更新"
+          body: |
+            Submodule を最新リビジョンに更新しました。
+          labels: |
+            dependencies
+
+      - name: Enable auto-merge
+        if: steps.cpr.outputs.pull-request-number && vars.SUBMODULE_AUTO_MERGE == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh pr merge --squash --auto "${{ steps.cpr.outputs.pull-request-number }}"
+
+  # --------------------------------------------------
+  # Skills の更新
+  # --------------------------------------------------
+  update-skills:
+    name: Skills 更新
+    runs-on: self-hosted
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+        with:
+          submodules: recursive
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Update skills
+        run: |
+          if [ -f scripts/update-skills.sh ]; then
+            bash scripts/update-skills.sh
+          else
+            echo "scripts/update-skills.sh が見つかりません。スキップします。"
+          fi
+
+      - name: Check for changes
+        id: check
+        run: |
+          if git diff --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Create Pull Request
+        id: cpr
+        if: steps.check.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore: skills を最新に更新"
+          branch: chore/update-skills
+          delete-branch: true
+          title: "chore: skills を最新に更新"
+          body: |
+            Skills を最新版に更新しました。
+          labels: |
+            dependencies
+
+      - name: Enable auto-merge
+        if: steps.cpr.outputs.pull-request-number && vars.SKILLS_AUTO_MERGE == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh pr merge --squash --auto "${{ steps.cpr.outputs.pull-request-number }}"

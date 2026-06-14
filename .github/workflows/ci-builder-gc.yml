@@ -1,0 +1,17 @@
+name: CI Builder GC
+
+on:
+  schedule:
+    - cron: "0 18 * * *" # 毎日 18:00 UTC（JST 3:00）
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  gc:
+    name: Builder GC
+    runs-on: self-hosted
+    steps:
+      - name: Prune dangling build cache
+        run: docker buildx prune --force --filter "until=24h"
