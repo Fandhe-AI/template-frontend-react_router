@@ -25,13 +25,17 @@ jobs:
       pull-requests: write
     steps:
       # GITHUB_TOKEN で作成した PR は後続 CI を発火しないため、
-      # CI 発火 + auto-merge を成立させるには App トークンを使う
+      # CI 発火 + auto-merge を成立させるには App トークンを使う。
+      # owner を指定し、submodule (別リポジトリ) も読めるよう
+      # App インストールスコープまでトークンを広げる
+      # （App は本リポジトリと全 submodule リポジトリにインストールが必要）。
       - name: Generate GitHub App token
         id: app-token
         uses: actions/create-github-app-token@v3
         with:
           app-id: ${{ vars.AUTOMATION_APP_ID }}
           private-key: ${{ secrets.AUTOMATION_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
 
       # workflow_dispatch を main 以外から実行しても常に main 基準で更新を計算する
       # （base-branch: main へ無関係な差分が混入するのを防ぐ）
