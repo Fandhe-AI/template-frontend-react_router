@@ -6,8 +6,7 @@ on:
   workflow_dispatch: # 手動実行も可能
 
 permissions:
-  contents: write
-  pull-requests: write
+  contents: read
 
 concurrency:
   group: ${{ github.workflow }}
@@ -16,97 +15,73 @@ concurrency:
 jobs:
   # --------------------------------------------------
   # Submodule の更新
+  # Fandhe-AI/actions/submodule-update を利用
   # --------------------------------------------------
   update-submodules:
     name: Submodule 更新
     runs-on: self-hosted
+    permissions:
+      contents: write
+      pull-requests: write
     steps:
+      # GITHUB_TOKEN で作成した PR は後続 CI を発火しないため、
+      # CI 発火 + auto-merge を成立させるには App トークンを使う
+      - name: Generate GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@v3
+        with:
+          app-id: ${{ vars.AUTOMATION_APP_ID }}
+          private-key: ${{ secrets.AUTOMATION_APP_PRIVATE_KEY }}
+
       - name: Checkout code
         uses: actions/checkout@v5
         with:
           submodules: recursive
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ steps.app-token.outputs.token }}
 
-      - name: Update submodules to latest
-        run: git submodule update --remote --recursive
-
-      - name: Check for changes
-        id: check
-        run: |
-          if git diff --quiet; then
-            echo "changed=false" >> "$GITHUB_OUTPUT"
-          else
-            echo "changed=true" >> "$GITHUB_OUTPUT"
-          fi
-
-      - name: Create Pull Request
-        id: cpr
-        if: steps.check.outputs.changed == 'true'
-        uses: peter-evans/create-pull-request@v7
+      - name: Update submodules and open PR
+        uses: Fandhe-AI/actions/submodule-update@c80ff94f229f86ba9e08723948c4dee0e1fb66bf # main
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: "chore: submodule を最新に更新"
-          branch: chore/update-submodules
-          delete-branch: true
-          title: "chore: submodule を最新に更新"
-          body: |
-            Submodule を最新リビジョンに更新しました。
-          labels: |
-            dependencies
-
-      - name: Enable auto-merge
-        if: steps.cpr.outputs.pull-request-number && vars.SUBMODULE_AUTO_MERGE == 'true'
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh pr merge --squash --auto "${{ steps.cpr.outputs.pull-request-number }}"
+          token: ${{ steps.app-token.outputs.token }}
+          base-branch: main
+          pr-labels: dependencies
+          auto-merge: ${{ vars.SUBMODULE_AUTO_MERGE }}
+          auto-merge-allowlist: ${{ vars.SUBMODULE_AUTO_MERGE_ALLOWLIST }}
 
   # --------------------------------------------------
   # Skills の更新
+  # Fandhe-AI/actions/skills-update を利用
   # --------------------------------------------------
   update-skills:
     name: Skills 更新
     runs-on: self-hosted
+    permissions:
+      contents: write
+      pull-requests: write
     steps:
+      - name: Generate GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@v3
+        with:
+          app-id: ${{ vars.AUTOMATION_APP_ID }}
+          private-key: ${{ secrets.AUTOMATION_APP_PRIVATE_KEY }}
+
       - name: Checkout code
         uses: actions/checkout@v5
         with:
-          submodules: recursive
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ steps.app-token.outputs.token }}
 
-      - name: Update skills
-        run: |
-          if [ -f scripts/update-skills.sh ]; then
-            bash scripts/update-skills.sh
-          else
-            echo "scripts/update-skills.sh が見つかりません。スキップします。"
-          fi
-
-      - name: Check for changes
-        id: check
-        run: |
-          if git diff --quiet; then
-            echo "changed=false" >> "$GITHUB_OUTPUT"
-          else
-            echo "changed=true" >> "$GITHUB_OUTPUT"
-          fi
-
-      - name: Create Pull Request
-        id: cpr
-        if: steps.check.outputs.changed == 'true'
-        uses: peter-evans/create-pull-request@v7
+      # self-hosted ランナーでは npx skills 実行に Node.js が必要
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: "chore: skills を最新に更新"
-          branch: chore/update-skills
-          delete-branch: true
-          title: "chore: skills を最新に更新"
-          body: |
-            Skills を最新版に更新しました。
-          labels: |
-            dependencies
+          node-version: "24.13.0"
 
-      - name: Enable auto-merge
-        if: steps.cpr.outputs.pull-request-number && vars.SKILLS_AUTO_MERGE == 'true'
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh pr merge --squash --auto "${{ steps.cpr.outputs.pull-request-number }}"
+      - name: Update skills and open PR
+        uses: Fandhe-AI/actions/skills-update@c80ff94f229f86ba9e08723948c4dee0e1fb66bf # main
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+          base-branch: main
+          pr-labels: dependencies
+          auto-merge: ${{ vars.SKILLS_AUTO_MERGE }}
+          auto-merge-allowlist: ${{ vars.SKILLS_AUTO_MERGE_ALLOWLIST }}
