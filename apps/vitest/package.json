@@ -4,11 +4,11 @@
   "devDependencies": {
     "@fandhe-ai/shared-config-typescript": "workspace:*",
     "@types/node": "25",
-    "@vitest/ui": "4.1.2",
+    "@vitest/ui": "4.1.4",
     "tsx": "4.21.0",
     "typescript": "6.0.2",
     "vite": "8.0.5",
-    "vitest": "4.1.2"
+    "vitest": "4.1.4"
   },
   "private": true,
   "scripts": {

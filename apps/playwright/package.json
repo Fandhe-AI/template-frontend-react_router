@@ -4,7 +4,7 @@
   "devDependencies": {
     "@fandhe-ai/shared-config-playwright": "workspace:*",
     "@fandhe-ai/shared-config-typescript": "workspace:*",
-    "@playwright/test": "1.58.2",
+    "@playwright/test": "1.59.1",
     "@types/node": "25",
     "typescript": "6.0.2"
   },
