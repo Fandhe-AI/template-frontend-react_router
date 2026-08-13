@@ -4,8 +4,8 @@
     "@fandhe-ai/shared-config-storybook": "workspace:*",
     "@fandhe-ai/shared-config-typescript": "workspace:*",
     "@storybook/react-vite": "10.3.3",
-    "react": "19.2.4",
-    "react-dom": "19.2.4",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
     "storybook": "10.3.5",
     "typescript": "6.0.2",
     "vite": "8.0.16"

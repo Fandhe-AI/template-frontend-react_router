@@ -3,7 +3,7 @@
   "description": "Sandbox slice for verifying tests, TypeDoc, and Storybook",
   "version": "0.0.0",
   "dependencies": {
-    "react": "19.2.4"
+    "react": "19.2.8"
   },
   "devDependencies": {
     "@fandhe-ai/shared-config-typescript": "workspace:*",
