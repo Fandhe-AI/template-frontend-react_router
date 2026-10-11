@@ -98,6 +98,12 @@
       "sourceType": "github",
       "computedHash": "b14ba908e2b07dea7bded8296b24ec1a8f8e7c42c4118089141779ffe8500546"
     },
+    "make": {
+      "source": "Fandhe-AI/agent-reference-skills",
+      "sourceType": "github",
+      "skillPath": "skills/make/SKILL.md",
+      "computedHash": "21beead4b74e0e0c5126b13a2d28e2598491216850786026ebd7f9c757638e71"
+    },
     "playwright": {
       "source": "Fandhe-AI/agent-reference-skills",
       "sourceType": "github",

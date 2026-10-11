@@ -55,7 +55,17 @@ make setup                        # Run all setup steps (submodules, env, volta,
 make setup-env                    # Generate .env from .env.example (with backup)
 make setup-submodules             # git submodule update --init --recursive
 make update-submodules            # git submodule update --remote --recursive
+make help                         # List make targets (Make-free list: scripts/help.sh)
 ```
+
+The Makefile is a thin entry point: multi-line / conditional logic lives in `scripts/*.sh` (shared helpers: `scripts/lib.sh`), single-line commands are written inline. When adding or renaming a target, update `scripts/help.sh` too. See the `make` skill (`.claude/skills/make`).
+
+## Rules
+
+- `.claude/rules/makefile.md` — Makefile / `scripts/` editing rules (thin Makefile, target add/rename procedure)
+- `.claude/rules/github-actions.md` — workflow editing rules (runner policy, required checks, triggers, checklist)
+- `.claude/rules/git-hooks.md` — lefthook rules
+- `.claude/rules/dotclaude-via-temp.md` — how to edit `.claude/`
 
 ## Architecture
 

@@ -16,9 +16,9 @@ paths:
 
 | ワークフロー | トリガー | 品質チェックのジョブ |
 | --- | --- | --- |
-| `.github/workflows/check-pr.yml`（PR チェック） | 全 PR | `reviewdog` / `editorconfig` / `commitlint` |
-| 同上 | main 向け PR のみ（`if: github.base_ref == 'main'`） | `lint` / `check-types` / `knip` / `syncpack` / `test` / `test-e2e` / `storybook-build` → `build` |
-| `.github/workflows/ci.yml`（CI） | main への push | `editorconfig` / `lint` / `check-types` / `knip` / `syncpack` / `test` / `test-e2e` / `storybook-build` → `build` |
+| `.github/workflows/check-pr.yml`（PR チェック） | 全 PR（draft 除く） | `reviewdog` / `editorconfig` / `commitlint` |
+| 同上 | main 向け PR のみ（`if: github.base_ref == 'main'`）・コード変更時 | `lint` / `check-types` / `knip` / `syncpack` / `test` / `test-e2e` / `storybook-build` / `build`（並列） |
+| `.github/workflows/ci.yml`（CI） | main への push | `editorconfig` / `lint` / `check-types` / `knip` / `syncpack` / `test` / `test-e2e` / `storybook-build` / `build`（並列） |
 
 main 以外をベースにした PR では `lint` 以下の品質チェックが走らないが、main へのマージ前（main 向け PR）と
 マージ後（`ci.yml`）で必ず実行されるため、フックで補わない。
