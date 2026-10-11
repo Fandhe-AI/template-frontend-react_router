@@ -44,12 +44,15 @@ runs:
     # キャッシュを追い出すため（.claude/rules/github-actions.md「キャッシュ方針」）。
     # actions/cache には save-if が無いため、main は actions/cache（復元 + 保存）、
     # それ以外は actions/cache/restore（復元のみ）を同じキーで使い分ける。
+    # キーはルートの pnpm-lock.yaml のみをハッシュする（pnpm workspace の lockfile はルート 1 つ）。
+    # '**/pnpm-lock.yaml' だと .agents/skills/make/samples 等のサンプル lockfile も混入し、
+    # 依存が変わっていないのにスキル更新でキーが変わるため。
     - name: Setup pnpm cache (restore and save on main)
       if: github.ref == 'refs/heads/main'
       uses: actions/cache@v4
       with:
         path: ${{ steps.pnpm-store.outputs.STORE_PATH }}
-        key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+        key: ${{ runner.os }}-pnpm-store-${{ hashFiles('pnpm-lock.yaml') }}
         restore-keys: |
           ${{ runner.os }}-pnpm-store-
 
@@ -58,7 +61,7 @@ runs:
       uses: actions/cache/restore@v4
       with:
         path: ${{ steps.pnpm-store.outputs.STORE_PATH }}
-        key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+        key: ${{ runner.os }}-pnpm-store-${{ hashFiles('pnpm-lock.yaml') }}
         restore-keys: |
           ${{ runner.os }}-pnpm-store-
 

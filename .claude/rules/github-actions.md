@@ -58,6 +58,9 @@ ruleset「Code Quality Copilot review for default branch」の required status c
   lockfile を変える PR（Dependabot 等）の 2 回目以降の push は main の旧キーから部分復元になり差分だけダウンロードする
 - キーに `github.sha` 等の一意な値を入れる場合は、同じ用途の直近キャッシュへ `restore-keys` の前方一致で戻れるようにし、
   複数ジョブが同じキーを奪い合わないようにする（`.turbo` はジョブごとに実行タスクが違うため `github.job` をキーに含める）
+- `hashFiles` に `**/` の再帰 glob を使わない。`.agents/skills/make/samples/**` のサンプル lockfile（`.claude/skills` の symlink 経由も）
+  が混入し、依存が変わっていないのにスキル更新でキーが変わる。ルートの `pnpm-lock.yaml` を直接指定する（再帰が必要な場合は
+  `'!.agents/**'`・`'!.claude/**'` で除外する）
 - 効果の無いキャッシュは持たない。`.turbo` は turbo のタスクを実行するジョブ（`check-types`・`test`・`storybook-build`・`build`）
   だけ `turbo-cache: "true"` で有効にする（`lint`・`knip`・`syncpack`・`commitlint` は turbo を実行せず、`test:e2e` は turbo 側で
   `cache: false`）
