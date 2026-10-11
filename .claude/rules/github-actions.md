@@ -81,6 +81,15 @@ ruleset「Code Quality Copilot review for default branch」の required status c
 - `.turbo`（約 1.6MB/件）: 実行ごとに新キーで 1 件保存（9 件中 7 件が PR スコープ）。並列ジョブが同じキーを奪い合い、最初に
   終わったジョブ（Storybook build や Syncpack）の `.turbo` だけが保存されるため、turbo のタスクヒットは `storybook:build` の
   1/1 のみで、`build` 0/1・`test:coverage` 0/2・`check-types` 0/2 は毎回 miss していた
+- pnpm store のキーが `hashFiles('**/pnpm-lock.yaml')` だったため、lockfile を変えていない #35（make スキルのサンプル追加）で
+  キーが `d20a7b…` → `af05d5…` に変わり 126MB を再保存していた
+
+### 実測（2026-10-11・変更後、#36 の PR 実行）
+
+- pnpm store: ルートのみのキーは `d20a7b…` に戻り、9 ジョブとも main の既存キャッシュに exact hit。保存 0 件・
+  `refs/pull/36/merge` のエントリ 0 件
+- `.turbo`: 4 ジョブのみ復元を試み、新しいキー空間のため miss（main で各ジョブのキーが保存されるまで）。マージ後、
+  同じジョブのキーから復元して turbo のタスクが `cached` になるかを確認し、ならなければ `.turbo` キャッシュを廃止する
 
 ## 計測方法
 
