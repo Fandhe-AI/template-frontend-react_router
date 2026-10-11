@@ -15,6 +15,7 @@ paths:
 - 複数行・条件分岐（`if` / `for` / `while`）・環境依存の処理は `scripts/*.sh` に置く。Makefile に処理を二重定義しない
 - lint / test / build は `package.json` の pnpm scripts（turbo）が正本。Makefile に同等ターゲットを複製しない
 - 中身の無いターゲット（`@true` 等）は置かない。呼び出し元が終了コードを信用してしまう
+- 順序依存のある前提ターゲットは兄弟 prerequisite に並べるだけでは `make -j` で並列化される。本 Makefile は `.NOTPARALLEL:` で直列化しており、削除しない
 - GNU Make 3.81（macOS 標準）互換。`.ONESHELL` / `.RECIPEPREFIX` 等 3.82+ 専用機能は使わない
 
 ## ターゲットの追加・改名・削除

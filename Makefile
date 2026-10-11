@@ -13,6 +13,10 @@
 
 .DEFAULT_GOAL := help
 
+# setup 系は順序依存（volta → pnpm → playwright / lefthook）のため、`make -j` でも直列に実行する。
+# 旧 Makefile から存在した問題への最小修正（GNU Make 3.81 でも引数なしの .NOTPARALLEL は有効）。
+.NOTPARALLEL:
+
 .PHONY: help setup setup-submodules update-submodules setup-env setup-direnv \
 	setup-volta setup-pnpm setup-playwright setup-lefthook \
 	volta-setup volta-install volta-install-node volta-install-corepack

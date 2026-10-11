@@ -30,7 +30,9 @@ ruleset「Code Quality Copilot review for default branch」の required status c
 - `check-pr.yml`: `pull_request`（`opened` / `synchronize` / `reopened` / `ready_for_review`）。draft ではスキップする
 - `ci.yml`: `push` は `main` のみ。ドキュメント・エージェントスキルのみの変更は `paths-ignore`（必須チェック対象外のため可）
 - 必須チェックを含む workflow には workflow 単位の `paths` を付けない（pending のまま永久にマージ不能になる）。
-  `check-pr.yml` の `changes` ジョブでコード変更の有無を判定し、重いジョブは `needs: changes` + `if` で skipped にする（skipped は必須チェックで成功扱い）
+  `check-pr.yml` の `changes` ジョブでコード変更の有無を判定し、重いジョブは `needs: changes` + `if` で skipped にする（skipped は必須チェックで成功扱い）。
+  `if` は `!cancelled()` を付け、`needs.changes.result != 'success' || needs.changes.outputs.code != 'false'` で判定する（判定ジョブ失敗時に必須ジョブが skipped で素通りしないよう fail-closed）。
+  シェルでの判定に `printf | grep -q` を使わない（SIGPIPE + pipefail で誤判定する。here-string を使う）
 - `concurrency`: PR は `group: ${{ github.workflow }}-${{ github.head_ref }}` + `cancel-in-progress: true`、main への push は cancel しない
 - `schedule` は `update-external.yml` の日次 1 回のみ。頻度を増やさない
 

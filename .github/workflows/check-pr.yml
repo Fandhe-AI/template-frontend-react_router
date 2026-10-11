@@ -39,15 +39,17 @@ jobs:
           REPO: ${{ github.repository }}
         run: |
           # .agents/ と .claude/ は biome の対象外かつ pnpm workspace 外のため、重いジョブは検査しない。
-          # ドキュメント・エージェントスキルのみなら code=false。API 失敗・空の場合は安全側（fail-closed）で true
-          if ! files="$(gh api --paginate "repos/${REPO}/pulls/${PR_NUMBER}/files" --jq '.[].filename')"; then
-            echo "::warning::changed files could not be listed; running all jobs"
-            echo "code=true" >> "$GITHUB_OUTPUT"
-          elif [ -n "$files" ] && ! printf '%s\n' "$files" | grep -qvE '^(docs/|\.agents/|\.claude/|skills-lock\.json$)|\.md$'; then
-            echo "code=false" >> "$GITHUB_OUTPUT"
+          # ドキュメント・エージェントスキルのみなら code=false。API 失敗・空の場合は安全側（fail-closed）で true。
+          # パイプ（printf | grep -q）は grep の早期終了で SIGPIPE → pipefail により誤判定するため here-string で渡す。
+          code=true
+          if files="$(gh api --paginate "repos/${REPO}/pulls/${PR_NUMBER}/files" --jq '.[].filename')"; then
+            if [ -n "$files" ] && ! grep -qvE '^(docs/|\.agents/|\.claude/|skills-lock\.json$)|\.md$' <<< "$files"; then
+              code=false
+            fi
           else
-            echo "code=true" >> "$GITHUB_OUTPUT"
+            echo "::warning::changed files could not be listed; running all jobs"
           fi
+          echo "code=${code}" >> "$GITHUB_OUTPUT"
 
   # --------------------------------------------------
   # 軽量チェック（セットアップ不要・全 PR 共通）
@@ -118,7 +120,10 @@ jobs:
   lint:
     name: Biome lint & format
     needs: changes
-    if: github.base_ref == 'main' && github.event.pull_request.draft == false && needs.changes.outputs.code == 'true'
+    # changes が失敗・判定不能でも skipped（= 必須チェック成功扱い）にせず実行する（fail-closed）
+    if: >-
+      !cancelled() && github.base_ref == 'main' && github.event.pull_request.draft == false &&
+      (needs.changes.result != 'success' || needs.changes.outputs.code != 'false')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -138,7 +143,10 @@ jobs:
   check-types:
     name: TypeScript type check
     needs: changes
-    if: github.base_ref == 'main' && github.event.pull_request.draft == false && needs.changes.outputs.code == 'true'
+    # changes が失敗・判定不能でも skipped（= 必須チェック成功扱い）にせず実行する（fail-closed）
+    if: >-
+      !cancelled() && github.base_ref == 'main' && github.event.pull_request.draft == false &&
+      (needs.changes.result != 'success' || needs.changes.outputs.code != 'false')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -158,7 +166,10 @@ jobs:
   knip:
     name: Knip (unused code)
     needs: changes
-    if: github.base_ref == 'main' && github.event.pull_request.draft == false && needs.changes.outputs.code == 'true'
+    # changes が失敗・判定不能でも skipped（= 必須チェック成功扱い）にせず実行する（fail-closed）
+    if: >-
+      !cancelled() && github.base_ref == 'main' && github.event.pull_request.draft == false &&
+      (needs.changes.result != 'success' || needs.changes.outputs.code != 'false')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -178,7 +189,10 @@ jobs:
   syncpack:
     name: Syncpack (dependency consistency)
     needs: changes
-    if: github.base_ref == 'main' && github.event.pull_request.draft == false && needs.changes.outputs.code == 'true'
+    # changes が失敗・判定不能でも skipped（= 必須チェック成功扱い）にせず実行する（fail-closed）
+    if: >-
+      !cancelled() && github.base_ref == 'main' && github.event.pull_request.draft == false &&
+      (needs.changes.result != 'success' || needs.changes.outputs.code != 'false')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -201,7 +215,10 @@ jobs:
   test:
     name: Test
     needs: changes
-    if: github.base_ref == 'main' && github.event.pull_request.draft == false && needs.changes.outputs.code == 'true'
+    # changes が失敗・判定不能でも skipped（= 必須チェック成功扱い）にせず実行する（fail-closed）
+    if: >-
+      !cancelled() && github.base_ref == 'main' && github.event.pull_request.draft == false &&
+      (needs.changes.result != 'success' || needs.changes.outputs.code != 'false')
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -236,7 +253,10 @@ jobs:
   test-e2e:
     name: E2E Test (Playwright)
     needs: changes
-    if: github.base_ref == 'main' && github.event.pull_request.draft == false && needs.changes.outputs.code == 'true'
+    # changes が失敗・判定不能でも skipped（= 必須チェック成功扱い）にせず実行する（fail-closed）
+    if: >-
+      !cancelled() && github.base_ref == 'main' && github.event.pull_request.draft == false &&
+      (needs.changes.result != 'success' || needs.changes.outputs.code != 'false')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -259,7 +279,10 @@ jobs:
   storybook-build:
     name: Storybook build
     needs: changes
-    if: github.base_ref == 'main' && github.event.pull_request.draft == false && needs.changes.outputs.code == 'true'
+    # changes が失敗・判定不能でも skipped（= 必須チェック成功扱い）にせず実行する（fail-closed）
+    if: >-
+      !cancelled() && github.base_ref == 'main' && github.event.pull_request.draft == false &&
+      (needs.changes.result != 'success' || needs.changes.outputs.code != 'false')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -282,7 +305,10 @@ jobs:
   build:
     name: Build
     needs: changes
-    if: github.base_ref == 'main' && github.event.pull_request.draft == false && needs.changes.outputs.code == 'true'
+    # changes が失敗・判定不能でも skipped（= 必須チェック成功扱い）にせず実行する（fail-closed）
+    if: >-
+      !cancelled() && github.base_ref == 'main' && github.event.pull_request.draft == false &&
+      (needs.changes.result != 'success' || needs.changes.outputs.code != 'false')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
