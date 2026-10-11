@@ -63,7 +63,7 @@ The Makefile is a thin entry point: multi-line / conditional logic lives in `scr
 ## Rules
 
 - `.claude/rules/makefile.md` — Makefile / `scripts/` editing rules (thin Makefile, target add/rename procedure)
-- `.claude/rules/github-actions.md` — workflow editing rules (runner policy, required checks, triggers, checklist)
+- `.claude/rules/github-actions.md` — workflow editing rules (runner policy, required checks, triggers, checklist, cache policy)
 - `.claude/rules/git-hooks.md` — lefthook rules
 - `.claude/rules/dotclaude-via-temp.md` — how to edit `.claude/`
 

@@ -43,15 +43,20 @@ ruleset「Code Quality Copilot review for default branch」の required status c
 - 不要な `needs` を作らない（独立ジョブは並列に走らせる）。`Build` も独立
 - セットアップは `.github/actions/setup-pnpm` / `install-deps` を使い、`fetch-depth` は必要時のみ（`commitlint` のみ 0）
 - 公式 action は既存方針に合わせて SHA ピン（`# vX.Y.Z` コメント付き）。composite action 内は tag 指定
-- キャッシュを追加・変更する場合は下の「キャッシュ方針」に従う
+- キャッシュを追加・変更する場合は下の「キャッシュ方針」に従い、確認結果を PR 本文に書く
 - CI 独自にロジックを書かず、`pnpm` scripts / `scripts/` の共通コマンドを呼ぶ
 - lefthook と検査を重複させない（`.claude/rules/git-hooks.md` 参照）
 - 変更後は `actionlint` を通す
 
 ## キャッシュ方針
 
-- 前提: リポジトリのキャッシュ上限は 10GB（超過分は LRU で古いものから追い出し、7 日間アクセスの無いものは削除）。
-  上限超過分の課金は Org の Actions 予算 $10（超過で停止）に含まれるため、上限を超える前提にしない。**10GB の中でヒット率を最大化する**ことを目的にする
+- 前提: リポジトリのキャッシュ上限は 10GB（Org 設定も 10GB。超過分は LRU で古いものから追い出し、7 日間アクセスの無いものは削除）。
+  Org の Actions 予算は $0（超過で停止）のため 10GB を超える上限は使えず（上げると 10GB を超えた時点でキャッシュが読み取り専用になる）、
+  上限を超える前提にしない。上限・予算の変更はユーザー判断。**10GB の中でヒット率を最大化する**ことを目的にする
+- 入れる前に効果を測る: キャッシュを足す・残す前に、ログ（pnpm の `downloaded` 件数・turbo の `cached` 件数・復元にかかった秒数）で
+  効果を確かめ、復元時間に見合わないものは入れない。本リポのジョブは GitHub ホステッド runner（毎回まっさら）だが、self-hosted
+  runner では pnpm store やツールチェーンがジョブをまたいで残り、キャッシュが無意味になることがある（Org の実例: mirror-ui は pnpm
+  キャッシュの復元に 1 ジョブ平均 75 秒かけて `downloaded 0` だったため撤去）
 - PR の実行が保存したキャッシュは `refs/pull/<n>/merge` スコープに入り、その PR 以外（main・他 PR）からは復元できない。
   **保存は main への push（`ci.yml`）のみ**とし、PR（`check-pr.yml`）は復元だけにする。`actions/cache` には `save-if` が無いため、
   `.github/actions/setup-pnpm` で main は `actions/cache`、それ以外は `actions/cache/restore` を同じキーで使い分けている。
@@ -61,17 +66,30 @@ ruleset「Code Quality Copilot review for default branch」の required status c
 - `hashFiles` に `**/` の再帰 glob を使わない。`.agents/skills/make/samples/**` のサンプル lockfile（`.claude/skills` の symlink 経由も）
   が混入し、依存が変わっていないのにスキル更新でキーが変わる。ルートの `pnpm-lock.yaml` を直接指定する（再帰が必要な場合は
   `'!.agents/**'`・`'!.claude/**'` で除外する）
+- ツールチェーンの版でビルド結果が変わる成果物をキャッシュする場合は、その版（`setup-pnpm` の `node-version`・`pnpm-version` 等）を
+  キーに入れる。入れないと版の更新後も古い成果物に exact hit し続け、exact hit では再保存されない（Org では Rust の target で
+  依存を毎回再ビルドし続けた例がある）
 - 効果の無いキャッシュは持たない。`.turbo` は turbo のタスクを実行するジョブ（`check-types`・`test`・`storybook-build`・`build`）
   だけ `turbo-cache: "true"` で有効にする（`lint`・`knip`・`syncpack`・`commitlint` は turbo を実行せず、`test:e2e` は turbo 側で
   `cache: false`）
+- サイズと追い出し: 1 世代の合計（1 件のサイズ × 種別。現状は pnpm store 約 126MB と `.turbo` 4 ジョブ分）が 10GB に余裕をもって
+  収まるようにする。毎回読まれる main の最新キャッシュは LRU で最後まで残るため、キー切替で古い世代が追い出されても新しい世代が
+  保存済みならミスにならない。この状態を保てていれば上限を上げる必要はない
 - 計測:
 
     ```bash
     gh api --paginate "repos/Fandhe-AI/template-frontend-react_router/actions/caches?per_page=100" \
       --jq '.actions_caches[]|[.key,.size_in_bytes,.ref,.last_accessed_at]|@tsv'   # 一覧（ref で PR 由来の複製を確認）
     gh api repos/Fandhe-AI/template-frontend-react_router/actions/cache/usage      # 使用量
+    gh cache list -R Fandhe-AI/template-frontend-react_router -L 100              # key・サイズ・ref
     gh run view <id> --log | grep -E "Cache restored from key|Cache not found|Cache saved with key|Cached: "
+    gh cache delete <id> -R Fandhe-AI/template-frontend-react_router              # 不要なキャッシュの削除
     ```
+
+  `Cache restored from key:` が primary key と一致すれば exact、それ以外は partial。`gh cache delete` は全 PR・main で共有する
+  状態を消すため、一覧で対象（key・ref・最終アクセス）を確認してから行う。2026-10-11 時点（#36 マージ後）の使用量は 0.54GB・17 件
+- PR チェックリスト: キャッシュを追加・変更する PR では、上記（効果測定・保存は main のみ・キー設計・サイズ見積もり）を
+  確認したことを PR 本文に書く
 
 ### 実測（2026-10-11・変更前）
 
