@@ -10,6 +10,10 @@ inputs:
     description: "pnpm version to use"
     required: false
     default: "10.32.1"
+  turbo-cache:
+    description: "Whether to restore/save the Turborepo local cache (.turbo). Enable only in jobs that run turbo tasks"
+    required: false
+    default: "false"
 
 runs:
   using: "composite"
@@ -35,18 +39,53 @@ runs:
       run: |
         echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_OUTPUT
 
-    - name: Setup pnpm cache
+    # キャッシュの保存は main への push のみ（PR は復元のみ）。PR で保存したキャッシュは
+    # refs/pull/<n>/merge スコープに入り他の ref から使えず、10GB 上限の LRU で main の
+    # キャッシュを追い出すため（.claude/rules/github-actions.md「キャッシュ方針」）。
+    # actions/cache には save-if が無いため、main は actions/cache（復元 + 保存）、
+    # それ以外は actions/cache/restore（復元のみ）を同じキーで使い分ける。
+    # キーはルートの pnpm-lock.yaml のみをハッシュする（pnpm workspace の lockfile はルート 1 つ）。
+    # '**/pnpm-lock.yaml' だと .agents/skills/make/samples 等のサンプル lockfile も混入し、
+    # 依存が変わっていないのにスキル更新でキーが変わるため。
+    - name: Setup pnpm cache (restore and save on main)
+      if: github.ref == 'refs/heads/main'
       uses: actions/cache@v4
       with:
         path: ${{ steps.pnpm-store.outputs.STORE_PATH }}
-        key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+        key: ${{ runner.os }}-pnpm-store-${{ hashFiles('pnpm-lock.yaml') }}
         restore-keys: |
           ${{ runner.os }}-pnpm-store-
 
-    - name: Setup Turborepo cache
+    - name: Restore pnpm cache (restore only outside main)
+      if: github.ref != 'refs/heads/main'
+      uses: actions/cache/restore@v4
+      with:
+        path: ${{ steps.pnpm-store.outputs.STORE_PATH }}
+        key: ${{ runner.os }}-pnpm-store-${{ hashFiles('pnpm-lock.yaml') }}
+        restore-keys: |
+          ${{ runner.os }}-pnpm-store-
+
+    # Turborepo のローカルキャッシュ（.turbo）はジョブごとに実行するタスクが異なるため、
+    # キーに github.job を含めてジョブ単位で分ける（共通キーだと並列ジョブのうち最初に
+    # 終わったジョブの .turbo だけが保存され、他ジョブのタスクが毎回 miss していた）。
+    # キーの github.sha は「main の push ごとに最新の .turbo を保存し直す」ためのもので、
+    # 復元は restore-keys の前方一致で同じジョブの直近のキャッシュを使う。
+    # turbo を実行しないジョブ（lint・knip・syncpack・commitlint）と turbo 側で cache: false の
+    # test:e2e では効果が無いため、turbo-cache 入力で明示したジョブだけ有効にする。
+    - name: Setup Turborepo cache (restore and save on main)
+      if: inputs.turbo-cache == 'true' && github.ref == 'refs/heads/main'
       uses: actions/cache@v4
       with:
         path: .turbo
-        key: ${{ runner.os }}-turbo-${{ github.sha }}
+        key: ${{ runner.os }}-turbo-${{ github.job }}-${{ github.sha }}
         restore-keys: |
-          ${{ runner.os }}-turbo-
+          ${{ runner.os }}-turbo-${{ github.job }}-
+
+    - name: Restore Turborepo cache (restore only outside main)
+      if: inputs.turbo-cache == 'true' && github.ref != 'refs/heads/main'
+      uses: actions/cache/restore@v4
+      with:
+        path: .turbo
+        key: ${{ runner.os }}-turbo-${{ github.job }}-${{ github.sha }}
+        restore-keys: |
+          ${{ runner.os }}-turbo-${{ github.job }}-
