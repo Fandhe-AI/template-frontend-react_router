@@ -38,9 +38,12 @@ jobs:
           PR_NUMBER: ${{ github.event.pull_request.number }}
           REPO: ${{ github.repository }}
         run: |
-          files="$(gh api --paginate "repos/${REPO}/pulls/${PR_NUMBER}/files" --jq '.[].filename')"
-          # ドキュメント・エージェントスキルのみなら code=false（判定不能・空の場合は安全側で true）
-          if [ -n "$files" ] && ! printf '%s\n' "$files" | grep -qvE '^(docs/|\.agents/|\.claude/|skills-lock\.json$)|\.md$'; then
+          # .agents/ と .claude/ は biome の対象外かつ pnpm workspace 外のため、重いジョブは検査しない。
+          # ドキュメント・エージェントスキルのみなら code=false。API 失敗・空の場合は安全側（fail-closed）で true
+          if ! files="$(gh api --paginate "repos/${REPO}/pulls/${PR_NUMBER}/files" --jq '.[].filename')"; then
+            echo "::warning::changed files could not be listed; running all jobs"
+            echo "code=true" >> "$GITHUB_OUTPUT"
+          elif [ -n "$files" ] && ! printf '%s\n' "$files" | grep -qvE '^(docs/|\.agents/|\.claude/|skills-lock\.json$)|\.md$'; then
             echo "code=false" >> "$GITHUB_OUTPUT"
           else
             echo "code=true" >> "$GITHUB_OUTPUT"

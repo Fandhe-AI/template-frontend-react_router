@@ -16,6 +16,9 @@ if command -v brew >/dev/null 2>&1; then
   brew install volta
 else
   curl https://get.volta.sh | bash
+  # インストーラは子シェルで動くため、このプロセスの PATH に volta を追加してから続行する
+  export VOLTA_HOME="${VOLTA_HOME:-${HOME}/.volta}"
+  export PATH="${VOLTA_HOME}/bin:${PATH}"
 fi
 volta setup
 echo "volta をインストールしました"
