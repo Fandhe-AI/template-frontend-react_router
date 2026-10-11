@@ -108,6 +108,7 @@ docs/                 — 詳細ドキュメント
 | `pnpm package:lint` | 依存バージョン整合性チェック |
 | `make setup` | 初期セットアップ（submodules, env, volta, pnpm, playwright, lefthook） |
 | `make update-submodules` | 共有設定 submodules を最新に更新 |
+| `make help` | make ターゲット一覧（Make 非依存の一覧は `scripts/help.sh`） |
 
 ## アーキテクチャ
 

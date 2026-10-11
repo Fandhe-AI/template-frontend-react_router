@@ -1,7 +1,14 @@
 name: PR チェック
 
+# ジョブ追加・変更時は .claude/rules/github-actions.md に従うこと。
+
+# 発火条件の方針:
+# - draft PR では実行しない（ready_for_review で実行される）。skipped は必須チェックでは成功扱い。
+# - ドキュメント・エージェントスキルのみの変更では重いジョブ（lint 以降）をスキップする。
+#   workflow 単位の paths は必須チェックが pending のまま残るため使わず、changes ジョブで判定する。
 on:
   pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
 
 permissions:
   contents: read
@@ -12,10 +19,39 @@ concurrency:
 
 jobs:
   # --------------------------------------------------
+  # 変更検知（コード以外のみの変更なら重いジョブをスキップする）
+  # --------------------------------------------------
+  changes:
+    name: Detect changes
+    if: github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+    outputs:
+      code: ${{ steps.detect.outputs.code }}
+    steps:
+      - name: Detect code changes
+        id: detect
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REPO: ${{ github.repository }}
+        run: |
+          files="$(gh api --paginate "repos/${REPO}/pulls/${PR_NUMBER}/files" --jq '.[].filename')"
+          # ドキュメント・エージェントスキルのみなら code=false（判定不能・空の場合は安全側で true）
+          if [ -n "$files" ] && ! printf '%s\n' "$files" | grep -qvE '^(docs/|\.agents/|\.claude/|skills-lock\.json$)|\.md$'; then
+            echo "code=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "code=true" >> "$GITHUB_OUTPUT"
+          fi
+
+  # --------------------------------------------------
   # 軽量チェック（セットアップ不要・全 PR 共通）
   # --------------------------------------------------
   reviewdog:
     name: Biome (reviewdog)
+    if: github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -34,6 +70,7 @@ jobs:
 
   editorconfig:
     name: EditorConfig
+    if: github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -51,6 +88,7 @@ jobs:
   # --------------------------------------------------
   commitlint:
     name: Commitlint
+    if: github.event.pull_request.draft == false
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -76,7 +114,8 @@ jobs:
   # --------------------------------------------------
   lint:
     name: Biome lint & format
-    if: github.base_ref == 'main'
+    needs: changes
+    if: github.base_ref == 'main' && github.event.pull_request.draft == false && needs.changes.outputs.code == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -95,7 +134,8 @@ jobs:
 
   check-types:
     name: TypeScript type check
-    if: github.base_ref == 'main'
+    needs: changes
+    if: github.base_ref == 'main' && github.event.pull_request.draft == false && needs.changes.outputs.code == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -114,7 +154,8 @@ jobs:
 
   knip:
     name: Knip (unused code)
-    if: github.base_ref == 'main'
+    needs: changes
+    if: github.base_ref == 'main' && github.event.pull_request.draft == false && needs.changes.outputs.code == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -133,7 +174,8 @@ jobs:
 
   syncpack:
     name: Syncpack (dependency consistency)
-    if: github.base_ref == 'main'
+    needs: changes
+    if: github.base_ref == 'main' && github.event.pull_request.draft == false && needs.changes.outputs.code == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -155,7 +197,8 @@ jobs:
 
   test:
     name: Test
-    if: github.base_ref == 'main'
+    needs: changes
+    if: github.base_ref == 'main' && github.event.pull_request.draft == false && needs.changes.outputs.code == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -189,7 +232,8 @@ jobs:
 
   test-e2e:
     name: E2E Test (Playwright)
-    if: github.base_ref == 'main'
+    needs: changes
+    if: github.base_ref == 'main' && github.event.pull_request.draft == false && needs.changes.outputs.code == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -211,7 +255,8 @@ jobs:
 
   storybook-build:
     name: Storybook build
-    if: github.base_ref == 'main'
+    needs: changes
+    if: github.base_ref == 'main' && github.event.pull_request.draft == false && needs.changes.outputs.code == 'true'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -229,13 +274,13 @@ jobs:
         run: pnpm storybook:build
 
   # --------------------------------------------------
-  # ビルド（品質チェック通過後・main ブランチ向け PR のみ）
+  # ビルド（品質チェックと並列実行・main ブランチ向け PR のみ）
   # --------------------------------------------------
   build:
     name: Build
-    if: github.base_ref == 'main'
+    needs: changes
+    if: github.base_ref == 'main' && github.event.pull_request.draft == false && needs.changes.outputs.code == 'true'
     runs-on: ubuntu-latest
-    needs: [lint, check-types, knip, syncpack, test, test-e2e, storybook-build]
     steps:
       - name: Checkout code
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0

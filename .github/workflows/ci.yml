@@ -1,9 +1,18 @@
 name: CI
 
+# ジョブ追加・変更時は .claude/rules/github-actions.md に従うこと。
+# push（main）は必須チェックの対象外のため、workflow 単位の paths-ignore でドキュメント・
+# エージェントスキルのみの変更をスキップしてよい（PR 側は check-pr.yml の changes ジョブで判定）。
 on:
   push:
     branches:
       - main
+    paths-ignore:
+      - 'docs/**'
+      - '.agents/**'
+      - '.claude/**'
+      - 'skills-lock.json'
+      - '**/*.md'
 
 permissions:
   contents: read
@@ -170,12 +179,11 @@ jobs:
         run: pnpm storybook:build
 
   # --------------------------------------------------
-  # ビルド（品質チェック通過後）
+  # ビルド（品質チェックと並列実行）
   # --------------------------------------------------
   build:
     name: Build
     runs-on: ubuntu-latest
-    needs: [lint, check-types, knip, syncpack, test, test-e2e, storybook-build]
     steps:
       - name: Checkout code
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5.1.0
