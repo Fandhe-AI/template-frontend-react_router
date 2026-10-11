@@ -71,6 +71,9 @@ jobs:
 
       - name: Setup pnpm and Node.js
         uses: ./.github/actions/setup-pnpm
+        with:
+          # turbo のタスクを実行するジョブのみ .turbo をキャッシュする（setup-pnpm の turbo-cache 入力）
+          turbo-cache: "true"
 
       - name: Install dependencies
         uses: ./.github/actions/install-deps
@@ -128,6 +131,9 @@ jobs:
 
       - name: Setup pnpm and Node.js
         uses: ./.github/actions/setup-pnpm
+        with:
+          # turbo のタスクを実行するジョブのみ .turbo をキャッシュする（setup-pnpm の turbo-cache 入力）
+          turbo-cache: "true"
 
       - name: Install dependencies
         uses: ./.github/actions/install-deps
@@ -171,6 +177,9 @@ jobs:
 
       - name: Setup pnpm and Node.js
         uses: ./.github/actions/setup-pnpm
+        with:
+          # turbo のタスクを実行するジョブのみ .turbo をキャッシュする（setup-pnpm の turbo-cache 入力）
+          turbo-cache: "true"
 
       - name: Install dependencies
         uses: ./.github/actions/install-deps
@@ -192,6 +201,9 @@ jobs:
 
       - name: Setup pnpm and Node.js
         uses: ./.github/actions/setup-pnpm
+        with:
+          # turbo のタスクを実行するジョブのみ .turbo をキャッシュする（setup-pnpm の turbo-cache 入力）
+          turbo-cache: "true"
 
       - name: Install dependencies
         uses: ./.github/actions/install-deps
