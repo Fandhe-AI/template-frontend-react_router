@@ -51,7 +51,7 @@ ruleset「Code Quality Copilot review for default branch」の required status c
 ## キャッシュ方針
 
 - 前提: リポジトリのキャッシュ上限は 10GB（超過分は LRU で古いものから追い出し、7 日間アクセスの無いものは削除）。
-  上限超過分の課金予算は $0 のため上限は引き上げられない。**10GB の中でヒット率を最大化する**ことを目的にする
+  上限超過分の課金は Org の Actions 予算 $10（超過で停止）に含まれるため、上限を超える前提にしない。**10GB の中でヒット率を最大化する**ことを目的にする
 - PR の実行が保存したキャッシュは `refs/pull/<n>/merge` スコープに入り、その PR 以外（main・他 PR）からは復元できない。
   **保存は main への push（`ci.yml`）のみ**とし、PR（`check-pr.yml`）は復元だけにする。`actions/cache` には `save-if` が無いため、
   `.github/actions/setup-pnpm` で main は `actions/cache`、それ以外は `actions/cache/restore` を同じキーで使い分けている。
