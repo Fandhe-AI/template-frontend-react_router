@@ -42,7 +42,7 @@ main 以外をベースにした PR では `lint` 以下の品質チェックが
 
 ## フックに置いてよいもの
 
-- `{staged_files}` に限定し、`glob` で対象を絞った 1 秒未満の検査
+- pre-commit: `{staged_files}` に限定し、`glob` で対象を絞った 1 秒未満の検査
 - CI ではコミット単位で検知できない、または push 後では遅いもの
 
 ### 明示的な例外
@@ -69,18 +69,21 @@ E2E・ビルドまで確認する場合は `pnpm test:e2e` / `pnpm storybook:bui
 
 - 既存の書式（pre-commit は `jobs`、commit-msg は `commands`）を維持する
 - `pre-commit` の `parallel: true` を維持する（直列化しない）
-- `{staged_files}` と `glob` で対象を絞る
+- pre-commit のジョブは `{staged_files}` と `glob` で対象ファイルを絞る
+- commit-msg はファイル絞り込みの対象外で、メッセージファイル（`{1}`）のみを検査する
 - 条件付き実行が必要な場合は lefthook の `skip` / `only` を使ってよい
 
 ## 検査を追加するときの判断手順
 
 1. その検査は `check-pr.yml` / `ci.yml` で既に実施されているか
     - 実施済みで、staged 限定にしても 1 秒以上かかる → フックに入れない
-2. staged ファイルに限定できるか
+2. pre-commit の場合: staged ファイルに限定できるか
     - できない → CI へ置く
+    - commit-msg の場合はメッセージファイル（`{1}`）のみを対象とし、この手順は適用しない
 3. CI へ置く場合は `check-pr.yml` と `ci.yml` の両方にジョブを追加し、ビルドの前提にする場合は `build` ジョブの `needs` にも追加する
     - pnpm・Node.js のセットアップは既存ジョブと同じく `./.github/actions/setup-pnpm` / `./.github/actions/install-deps` を使う
-4. 編集後に以下を実行し、summary の合計時間をユーザーへ報告する（1 秒以上なら構成を見直す）
+4. pre-commit を編集した場合は以下を実行し、summary の合計時間をユーザーへ報告する（1 秒以上なら構成を見直す）
+    - commit-msg を編集した場合は、実コミット時に表示される commit-msg の summary を報告する
 
 ```bash
 time lefthook run pre-commit --all-files
