@@ -43,6 +43,18 @@ rmdir _/dotclaude 2>/dev/null         # 空なら削除
 - **`rm -rf _/dotclaude` は禁止** — 並行作業が `_/dotclaude/` を共有している可能性がある
 - 自分が作成したファイル・サブディレクトリのみ削除する
 
+## Git hooks（lefthook）編集ルール
+
+**ファイル**: `.claude/rules/git-hooks.md`
+**適用対象**: `lefthook.yml` の編集
+
+フックは開発速度を落とさないことを最優先し、staged 限定で一瞬で終わる検査とコミット単位でしか意味がない検査に限る。
+
+- 時間予算: pre-commit は全ジョブ合計 1 秒未満（`lefthook run pre-commit --all-files` で計測）。pre-push 等は原則追加しない
+- 型チェック・テスト・ビルド・全体 lint・Knip・Syncpack など CI（`check-pr.yml`・`ci.yml`）と重複する重い検査はフックに置かない
+- 例外: pre-commit の `biome check`（staged 限定）と commit-msg の `commitlint` は CI と重複するが軽量なため維持
+- `--no-verify` / `LEFTHOOK=0` によるバイパスは禁止
+
 ## dotclaude-writer スキル
 
 **ファイル**: `.claude/skills/dotclaude-writer/SKILL.md`

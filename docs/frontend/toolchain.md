@@ -112,23 +112,14 @@ extends: [
 
 ## Lefthook
 
-Git hooks マネージャー。3 つのフックを設定:
+Git hooks マネージャー。2 つのフックを設定する。型チェック・テスト・Knip・Syncpack・ビルドはフックでは実行せず、
+CI（`.github/workflows/check-pr.yml`・`ci.yml`）でのみ実行する（方針は `.claude/rules/git-hooks.md`）:
 
 ### pre-commit（並列実行）
 
 | ジョブ         | 対象                                                                           | コマンド                                                                                               |
 | -------------- | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------ |
 | `biome check`  | `{apps,packages}/**/*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}` | `pnpm exec biome check --no-errors-on-unmatched --files-ignore-unknown=true --colors=off {staged_files}` |
-
-### pre-push（並列実行）
-
-| ジョブ              | 対象                                         | コマンド                   |
-| ------------------- | -------------------------------------------- | -------------------------- |
-| `check-types`       | `{apps,packages}/**/*.{ts,tsx,js,jsx}`       | `pnpm run check-types`     |
-| `knip`              | `{apps,packages}/**/*.{ts,tsx,js,jsx,json}`  | `pnpm run knip`            |
-| `syncpack:lint`     | `**/package.json`                            | `pnpm run package:lint`    |
-| `syncpack:format`   | `**/package.json`                            | `pnpm run package:format`  |
-| `test`              | `{apps,packages}/**/*.{ts,tsx,js,jsx}`       | `pnpm run test`            |
 
 ### commit-msg
 
