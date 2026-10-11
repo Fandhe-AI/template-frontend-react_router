@@ -188,11 +188,10 @@ pnpm --filter=playwright test:ui               # UI モード
 
 ## CI / ローカル統合
 
-### Lefthook（ローカル）
+### ローカル
 
-| フック | ジョブ | コマンド |
-| --- | --- | --- |
-| pre-push | `test` | `pnpm run test` |
+テストは Git hooks（Lefthook）では実行せず、CI でのみ実行する（方針は `.claude/rules/git-hooks.md`）。
+push 前に確認したい場合は `pnpm test` を手動で実行する。
 
 ### GitHub Actions（CI）
 

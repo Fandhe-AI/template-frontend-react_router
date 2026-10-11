@@ -1,3 +1,12 @@
+# lefthook（https://lefthook.dev）の Git hooks 定義。
+#
+# `make setup`（または `pnpm exec lefthook install`）を実行したローカル環境でのみ発火する。
+# CI 側の検査を代替するものではなく、ローカルでの早期検知が目的。
+# `--no-verify` によるバイパスは行わない。
+# フックの追加・変更時は .claude/rules/git-hooks.md の方針（時間予算・CI との役割分担）に従う。
+# 型チェック・テスト・knip・syncpack・ビルド・全体 lint など重い処理や CI と重複する検査はフックに置かず、
+# CI（.github/workflows/check-pr.yml・ci.yml）側に置く。
+
 pre-commit:
   parallel: true
   jobs:
@@ -6,39 +15,6 @@ pre-commit:
       run: pnpm exec biome check --no-errors-on-unmatched --files-ignore-unknown=true --colors=off {staged_files}
       tags:
         - lint
-
-pre-push:
-  parallel: true
-  jobs:
-    - name: "check-types"
-      glob: "{apps,packages}/**/*.{ts,tsx,js,jsx}"
-      run: pnpm run check-types
-      tags:
-        - types
-
-    - name: "knip"
-      glob: "{apps,packages}/**/*.{ts,tsx,js,jsx,json}"
-      run: pnpm run knip
-      tags:
-        - dependencies
-
-    - name: "syncpack:lint"
-      glob: "**/package.json"
-      run: pnpm run package:lint
-      tags:
-        - syncpack
-
-    - name: "syncpack:format"
-      glob: "**/package.json"
-      run: pnpm run package:format
-      tags:
-        - syncpack
-
-    - name: "test"
-      glob: "{apps,packages}/**/*.{ts,tsx,js,jsx}"
-      run: pnpm run test
-      tags:
-        - test
 
 commit-msg:
   commands:

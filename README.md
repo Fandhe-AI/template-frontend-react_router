@@ -84,7 +84,7 @@ docs/                 — 詳細ドキュメント
 | UI Catalog | Storybook 10 |
 | Docs | TypeDoc |
 | Build | Turborepo |
-| Git Hooks | Lefthook (pre-commit: biome, commit-msg: commitlint, pre-push: test) |
+| Git Hooks | Lefthook (pre-commit: biome, commit-msg: commitlint。型チェック・テスト等は CI のみ) |
 
 ## コマンド一覧
 

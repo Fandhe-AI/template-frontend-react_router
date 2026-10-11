@@ -96,7 +96,7 @@ packages/
 - **Storybook 10** for UI catalog
 - **Playwright 1.58** for E2E testing
 - **TypeDoc** for API documentation generation
-- **Lefthook** for git hooks (pre-commit: biome, commit-msg: commitlint, pre-push: test)
+- **Lefthook** for git hooks (pre-commit: biome, commit-msg: commitlint; no pre-push — type check / test / knip / syncpack run in CI only. See `.claude/rules/git-hooks.md`)
 - TypeScript strict mode with `noUncheckedIndexedAccess: true`
 - Path alias `@/*` → `./src/*` in all packages/apps with `tsconfig.json`
 

@@ -18,7 +18,8 @@
 │   ├── security-auditor.md
 │   └── sub-investigator.md
 ├── rules/                       # 操作ルール
-│   └── dotclaude-via-temp.md
+│   ├── dotclaude-via-temp.md
+│   └── git-hooks.md
 └── skills/                      # ローカルスキル
     ├── create-component/SKILL.md
     ├── create-slice/SKILL.md
@@ -38,7 +39,7 @@ skills-lock.json                 # スキルバージョンロック
 | [agents.md](agents.md) | 9 つのカスタムエージェントの役割・モデル・利用場面   |
 | [skills.md](skills.md) | ローカルスキル 5 つ + リファレンススキル 33 個の一覧 |
 | [mcp.md](mcp.md)       | MCP サーバー（Figma / Playwright / Chakra UI）の構成 |
-| [rules.md](rules.md)   | `.claude/` ディレクトリ操作ルールと運用規約          |
+| [rules.md](rules.md)   | `.claude/` 操作ルール・Git hooks ルール        |
 | [hooks.md](hooks.md)   | Hooks 設定（自動フォーマット・通知・セッション開始） |
 
 ## スキルソース
