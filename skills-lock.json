@@ -48,7 +48,7 @@
       "source": "Fandhe-AI/agent-cli-skills",
       "sourceType": "github",
       "skillPath": "skills/create-pr/SKILL.md",
-      "computedHash": "032b0bc72ed4fb9478204689f00d508fcd3979a5676c125ae5893d54112a391a"
+      "computedHash": "582d02bfd7f01f83a7156139098df70af0a716ec4cb435b79cac9124e9461029"
     },
     "deploy-to-vercel": {
       "source": "vercel-labs/agent-skills",
