@@ -25,7 +25,7 @@
       "source": "Fandhe-AI/agent-cli-skills",
       "sourceType": "github",
       "skillPath": "skills/create-commit/SKILL.md",
-      "computedHash": "ab30a355b1c030c39adb391cbdfbf2e099ff355a6c484b03690fa2b3f1c65161"
+      "computedHash": "77ba8d6f43816fabfdc7d73068688235c74a18dcc923efabfa2d8c9d553e02c9"
     },
     "create-design-system-rules": {
       "source": "figma/mcp-server-guide",
@@ -48,7 +48,7 @@
       "source": "Fandhe-AI/agent-cli-skills",
       "sourceType": "github",
       "skillPath": "skills/create-pr/SKILL.md",
-      "computedHash": "31c472427315bb765c148530c6b249ca3bba29d4d139652118073644edc03662"
+      "computedHash": "d895101f05cfe9de4f88b7e8277c73f0855165c010c59b38eba2b3a6faa853e4"
     },
     "deploy-to-vercel": {
       "source": "vercel-labs/agent-skills",
@@ -80,7 +80,7 @@
       "source": "Fandhe-AI/agent-cli-skills",
       "sourceType": "github",
       "skillPath": "skills/implement-review/SKILL.md",
-      "computedHash": "7c87df811e7374c98164683524be5f1f419156ab101965e83bd523a1fde0b223"
+      "computedHash": "a72f2239f6bc87ee5c7567e05adcc5a91e751df1367eadf6d297a08b01f7a3fa"
     },
     "implement-review-pr": {
       "source": "Fandhe-AI/agent-cli-skills",
